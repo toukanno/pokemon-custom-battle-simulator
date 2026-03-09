@@ -1,0 +1,20 @@
+{
+  "name": "pokemon-custom-battle-simulator",
+  "version": "1.0.0",
+  "description": "A custom Pokemon battle simulator",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest",
+    "test:coverage": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://local_proxy@127.0.0.1:35725/git/toukanno/pokemon-custom-battle-simulator"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^30.2.0"
+  }
+}
