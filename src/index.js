@@ -4,6 +4,10 @@ const { MOVES, MOVE_CATEGORIES, getMoveById, validateMoveset } = require('./move
 const { TYPES, TYPE_EFFECTIVENESS, getEffectiveness, getEffectivenessMessage } = require('./types');
 const { calculateDamage, getCriticalHitChance, calculateRecoilDamage, calculateConfusionDamage } = require('./damage');
 const { POKEDEX, buildPokemon, buildTeam, validateTeam, getPokedexEntry, listAvailablePokemon } = require('./teambuilder');
+const { BattleAnalytics } = require('./battleAnalytics');
+const { InfoGatherer } = require('./infoGatherer');
+const { MetaAnalyzer } = require('./metaAnalyzer');
+const { MatchupScout } = require('./matchupScout');
 
 module.exports = {
   Pokemon,
@@ -26,4 +30,8 @@ module.exports = {
   validateTeam,
   getPokedexEntry,
   listAvailablePokemon,
+  BattleAnalytics,
+  InfoGatherer,
+  MetaAnalyzer,
+  MatchupScout,
 };
