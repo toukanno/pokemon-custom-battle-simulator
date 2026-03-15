@@ -98,8 +98,10 @@ class Pokemon {
     let multiplier;
     if (stat === 'accuracy') {
       multiplier = stage >= 0 ? (3 + stage) / 3 : 3 / (3 - stage);
+      return multiplier;
     } else if (stat === 'evasion') {
       multiplier = stage >= 0 ? 3 / (3 + stage) : (3 - stage) / 3;
+      return multiplier;
     } else {
       multiplier = stage >= 0 ? (2 + stage) / 2 : 2 / (2 - stage);
     }
@@ -150,6 +152,9 @@ class Pokemon {
   }
 
   clearStatus() {
+    if (this.status === 'toxic') {
+      this.toxicCounter = 0;
+    }
     this.status = null;
   }
 
@@ -162,28 +167,28 @@ class Pokemon {
   }
 
   canMove() {
-    if (!this.isAlive) return false;
-    if (this.status === 'paralysis' && Math.random() < 0.25) return false;
+    if (!this.isAlive) return { able: false, reason: 'fainted' };
+    if (this.volatileStatus.has('flinch')) {
+      this.volatileStatus.delete('flinch');
+      return { able: false, reason: 'flinch' };
+    }
+    if (this.status === 'paralysis' && Math.random() < 0.25) return { able: false, reason: 'paralysis' };
     if (this.status === 'freeze') {
       if (Math.random() < 0.2) {
         this.clearStatus();
-        return true;
+        return { able: true };
       }
-      return false;
+      return { able: false, reason: 'freeze' };
     }
     if (this.status === 'sleep') {
       if (Math.random() < 0.33) {
         this.clearStatus();
-        return true;
+        return { able: true };
       }
-      return false;
+      return { able: false, reason: 'sleep' };
     }
-    if (this.volatileStatus.has('confusion') && Math.random() < 0.33) return false;
-    if (this.volatileStatus.has('flinch')) {
-      this.volatileStatus.delete('flinch');
-      return false;
-    }
-    return true;
+    if (this.volatileStatus.has('confusion') && Math.random() < 0.33) return { able: false, reason: 'confusion' };
+    return { able: true };
   }
 }
 
