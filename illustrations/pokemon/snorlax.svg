@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <radialGradient id="snorlax-bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#A8A878" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#A8A878" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="snorlax-body" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2C3E50"/>
+      <stop offset="100%" stop-color="#1A252F"/>
+    </linearGradient>
+    <linearGradient id="snorlax-belly" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F5E6C8"/>
+      <stop offset="100%" stop-color="#D4C09A"/>
+    </linearGradient>
+    <linearGradient id="snorlax-face" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F5E6C8"/>
+      <stop offset="100%" stop-color="#E8D5B0"/>
+    </linearGradient>
+  </defs>
+  <circle cx="200" cy="200" r="180" fill="url(#snorlax-bg)"/>
+  <!-- Zzz sleep indicators -->
+  <text x="290" y="100" font-family="Arial, sans-serif" font-size="28" fill="#6B7B8D" opacity="0.5" font-weight="bold">Z</text>
+  <text x="310" y="75" font-family="Arial, sans-serif" font-size="22" fill="#6B7B8D" opacity="0.4" font-weight="bold">z</text>
+  <text x="325" y="55" font-family="Arial, sans-serif" font-size="16" fill="#6B7B8D" opacity="0.3" font-weight="bold">z</text>
+  <!-- Body (very round) -->
+  <ellipse cx="200" cy="250" rx="110" ry="105" fill="url(#snorlax-body)" stroke="#131C24" stroke-width="2.5"/>
+  <!-- Belly -->
+  <ellipse cx="200" cy="265" rx="70" ry="75" fill="url(#snorlax-belly)" stroke="#C4A870" stroke-width="1.5"/>
+  <!-- Left arm -->
+  <path d="M100 230 Q75 250 65 275 Q60 290 70 288 Q80 280 85 270 Q90 260 100 250Z" fill="url(#snorlax-body)" stroke="#131C24" stroke-width="2"/>
+  <!-- Left paw -->
+  <ellipse cx="68" cy="282" rx="12" ry="8" fill="url(#snorlax-belly)" stroke="#C4A870" stroke-width="1"/>
+  <!-- Right arm -->
+  <path d="M300 230 Q325 250 335 275 Q340 290 330 288 Q320 280 315 270 Q310 260 300 250Z" fill="url(#snorlax-body)" stroke="#131C24" stroke-width="2"/>
+  <!-- Right paw -->
+  <ellipse cx="332" cy="282" rx="12" ry="8" fill="url(#snorlax-belly)" stroke="#C4A870" stroke-width="1"/>
+  <!-- Left foot -->
+  <ellipse cx="155" cy="348" rx="30" ry="14" fill="url(#snorlax-body)" stroke="#131C24" stroke-width="1.5"/>
+  <ellipse cx="155" cy="348" rx="20" ry="9" fill="url(#snorlax-belly)" stroke="#C4A870" stroke-width="1"/>
+  <!-- Right foot -->
+  <ellipse cx="245" cy="348" rx="30" ry="14" fill="url(#snorlax-body)" stroke="#131C24" stroke-width="1.5"/>
+  <ellipse cx="245" cy="348" rx="20" ry="9" fill="url(#snorlax-belly)" stroke="#C4A870" stroke-width="1"/>
+  <!-- Head -->
+  <ellipse cx="200" cy="155" rx="55" ry="48" fill="url(#snorlax-body)" stroke="#131C24" stroke-width="2"/>
+  <!-- Face area -->
+  <ellipse cx="200" cy="162" rx="38" ry="30" fill="url(#snorlax-face)"/>
+  <!-- Ears -->
+  <ellipse cx="155" cy="120" rx="15" ry="12" fill="url(#snorlax-body)" stroke="#131C24" stroke-width="1.5"/>
+  <ellipse cx="245" cy="120" rx="15" ry="12" fill="url(#snorlax-body)" stroke="#131C24" stroke-width="1.5"/>
+  <!-- Eyes (closed, sleeping) -->
+  <path d="M172 152 Q180 148 190 152" fill="none" stroke="#5D4E37" stroke-width="3" stroke-linecap="round"/>
+  <path d="M210 152 Q220 148 228 152" fill="none" stroke="#5D4E37" stroke-width="3" stroke-linecap="round"/>
+  <!-- Nose -->
+  <ellipse cx="200" cy="162" rx="5" ry="3.5" fill="#5D4E37"/>
+  <!-- Mouth (open, snoring) -->
+  <path d="M185 172 Q200 182 215 172" fill="#3D2F20" stroke="#5D4E37" stroke-width="2"/>
+  <!-- Teeth -->
+  <path d="M190 172 L193 176 L196 172" fill="white"/>
+  <path d="M204 172 L207 176 L210 172" fill="white"/>
+  <!-- Name label -->
+  <text x="200" y="390" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#2C3E50">SNORLAX</text>
+  <text x="200" y="22" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#A8A878">Normal</text>
+</svg>

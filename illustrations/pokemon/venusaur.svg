@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <radialGradient id="venusaur-bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#4CAF50" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#4CAF50" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="venusaur-body" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5DA06B"/>
+      <stop offset="100%" stop-color="#3D7A4A"/>
+    </linearGradient>
+    <linearGradient id="venusaur-spots" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2E5E38"/>
+      <stop offset="100%" stop-color="#1D4025"/>
+    </linearGradient>
+    <linearGradient id="flower-petal" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FF6B8A"/>
+      <stop offset="100%" stop-color="#E0345C"/>
+    </linearGradient>
+    <linearGradient id="flower-center" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFD54F"/>
+      <stop offset="100%" stop-color="#F9A825"/>
+    </linearGradient>
+    <linearGradient id="leaf-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#66BB6A"/>
+      <stop offset="100%" stop-color="#388E3C"/>
+    </linearGradient>
+  </defs>
+  <circle cx="200" cy="200" r="180" fill="url(#venusaur-bg)"/>
+  <!-- Back leaves -->
+  <path d="M110 160 Q80 120 60 100 Q90 105 120 125 Q100 95 85 70 Q115 90 135 120 Q125 85 120 60 Q145 95 150 130Z" fill="url(#leaf-grad)" stroke="#2E7D32" stroke-width="1.5"/>
+  <path d="M290 160 Q320 120 340 100 Q310 105 280 125 Q300 95 315 70 Q285 90 265 120 Q275 85 280 60 Q255 95 250 130Z" fill="url(#leaf-grad)" stroke="#2E7D32" stroke-width="1.5"/>
+  <!-- Trunk/plant base -->
+  <ellipse cx="200" cy="185" rx="30" ry="20" fill="#5D8B3A" stroke="#3D6A25" stroke-width="2"/>
+  <!-- Flower petals -->
+  <ellipse cx="170" cy="140" rx="28" ry="18" fill="url(#flower-petal)" stroke="#C0294A" stroke-width="1.5" transform="rotate(-30 170 140)"/>
+  <ellipse cx="230" cy="140" rx="28" ry="18" fill="url(#flower-petal)" stroke="#C0294A" stroke-width="1.5" transform="rotate(30 230 140)"/>
+  <ellipse cx="160" cy="170" rx="28" ry="18" fill="url(#flower-petal)" stroke="#C0294A" stroke-width="1.5" transform="rotate(-60 160 170)"/>
+  <ellipse cx="240" cy="170" rx="28" ry="18" fill="url(#flower-petal)" stroke="#C0294A" stroke-width="1.5" transform="rotate(60 240 170)"/>
+  <ellipse cx="180" cy="195" rx="25" ry="16" fill="url(#flower-petal)" stroke="#C0294A" stroke-width="1.5" transform="rotate(-15 180 195)"/>
+  <ellipse cx="220" cy="195" rx="25" ry="16" fill="url(#flower-petal)" stroke="#C0294A" stroke-width="1.5" transform="rotate(15 220 195)"/>
+  <!-- Flower center -->
+  <circle cx="200" cy="165" r="22" fill="url(#flower-center)" stroke="#E68A00" stroke-width="2"/>
+  <circle cx="193" cy="158" r="4" fill="#E68A00" opacity="0.6"/>
+  <circle cx="207" cy="160" r="3" fill="#E68A00" opacity="0.6"/>
+  <circle cx="200" cy="172" r="3.5" fill="#E68A00" opacity="0.6"/>
+  <!-- Body -->
+  <ellipse cx="200" cy="280" rx="80" ry="60" fill="url(#venusaur-body)" stroke="#2D5E35" stroke-width="2.5"/>
+  <!-- Dark spots on body -->
+  <ellipse cx="165" cy="270" rx="12" ry="8" fill="url(#venusaur-spots)" opacity="0.5"/>
+  <ellipse cx="230" cy="265" rx="10" ry="7" fill="url(#venusaur-spots)" opacity="0.5"/>
+  <ellipse cx="200" cy="295" rx="11" ry="7" fill="url(#venusaur-spots)" opacity="0.5"/>
+  <!-- Front left leg -->
+  <path d="M140 300 Q130 325 120 345 Q115 355 125 358 Q132 355 135 350 Q140 355 148 358 Q152 352 140 342 Q145 325 150 305Z" fill="url(#venusaur-body)" stroke="#2D5E35" stroke-width="2"/>
+  <!-- Front right leg -->
+  <path d="M260 300 Q270 325 280 345 Q285 355 275 358 Q268 355 265 350 Q260 355 252 358 Q248 352 260 342 Q255 325 250 305Z" fill="url(#venusaur-body)" stroke="#2D5E35" stroke-width="2"/>
+  <!-- Back left leg -->
+  <path d="M135 310 Q125 330 118 340 Q118 348 128 348 Q135 340 138 318Z" fill="url(#venusaur-body)" stroke="#2D5E35" stroke-width="1.5"/>
+  <!-- Back right leg -->
+  <path d="M265 310 Q275 330 282 340 Q282 348 272 348 Q265 340 262 318Z" fill="url(#venusaur-body)" stroke="#2D5E35" stroke-width="1.5"/>
+  <!-- Head -->
+  <ellipse cx="200" cy="240" rx="42" ry="30" fill="url(#venusaur-body)" stroke="#2D5E35" stroke-width="2"/>
+  <!-- Mouth -->
+  <path d="M170 250 Q200 265 230 250" fill="#2D5E35" stroke="#1D4025" stroke-width="1.5"/>
+  <path d="M175 250 Q200 258 225 250" fill="#3D7A4A"/>
+  <!-- Eyes -->
+  <ellipse cx="182" cy="232" rx="10" ry="11" fill="white"/>
+  <ellipse cx="218" cy="232" rx="10" ry="11" fill="white"/>
+  <ellipse cx="185" cy="233" rx="6" ry="8" fill="#8B0000"/>
+  <ellipse cx="221" cy="233" rx="6" ry="8" fill="#8B0000"/>
+  <circle cx="187" cy="230" r="2.5" fill="white"/>
+  <circle cx="223" cy="230" r="2.5" fill="white"/>
+  <!-- Eyebrows (angry look) -->
+  <path d="M172 222 Q182 218 192 224" fill="none" stroke="#2D5E35" stroke-width="3" stroke-linecap="round"/>
+  <path d="M228 222 Q218 218 208 224" fill="none" stroke="#2D5E35" stroke-width="3" stroke-linecap="round"/>
+  <!-- Name label -->
+  <text x="200" y="390" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#3D7A4A">VENUSAUR</text>
+  <text x="200" y="22" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#4CAF50">Grass / Poison</text>
+</svg>

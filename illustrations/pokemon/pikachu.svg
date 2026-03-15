@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <radialGradient id="pikachu-bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFD700" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#FFD700" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="pikachu-body" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFD700"/>
+      <stop offset="100%" stop-color="#E6B800"/>
+    </linearGradient>
+    <linearGradient id="pikachu-cheek" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF6B6B"/>
+      <stop offset="100%" stop-color="#E05050"/>
+    </linearGradient>
+    <filter id="electric-glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <circle cx="200" cy="200" r="180" fill="url(#pikachu-bg)"/>
+  <!-- Electric sparks -->
+  <g filter="url(#electric-glow)" opacity="0.5">
+    <path d="M80 120 L95 130 L82 135 L100 150" fill="none" stroke="#FFD700" stroke-width="2.5"/>
+    <path d="M320 120 L305 130 L318 135 L300 150" fill="none" stroke="#FFD700" stroke-width="2.5"/>
+    <path d="M70 200 L85 195 L78 210 L95 205" fill="none" stroke="#FFD700" stroke-width="2"/>
+    <path d="M330 200 L315 195 L322 210 L305 205" fill="none" stroke="#FFD700" stroke-width="2"/>
+  </g>
+  <!-- Tail (lightning bolt shape) -->
+  <path d="M260 220 L290 180 L275 180 L310 120 L295 120 L330 60 L280 140 L295 140 L265 190 L280 190 L255 230Z" fill="url(#pikachu-body)" stroke="#B8860B" stroke-width="2"/>
+  <path d="M310 120 L295 120 L330 60 L316 100" fill="#B8860B" opacity="0.3"/>
+  <!-- Body -->
+  <ellipse cx="195" cy="260" rx="55" ry="65" fill="url(#pikachu-body)" stroke="#B8860B" stroke-width="2"/>
+  <!-- Belly stripe -->
+  <path d="M160 230 Q195 220 230 230" fill="none" stroke="#B8860B" stroke-width="1.5" opacity="0.4"/>
+  <!-- Left ear -->
+  <path d="M155 140 Q140 80 145 40 Q150 38 155 42 Q165 80 170 130Z" fill="url(#pikachu-body)" stroke="#B8860B" stroke-width="2"/>
+  <path d="M145 40 Q150 38 155 42 Q152 55 148 55Z" fill="#222"/>
+  <!-- Right ear -->
+  <path d="M235 140 Q250 80 245 40 Q240 38 235 42 Q225 80 220 130Z" fill="url(#pikachu-body)" stroke="#B8860B" stroke-width="2"/>
+  <path d="M245 40 Q240 38 235 42 Q238 55 242 55Z" fill="#222"/>
+  <!-- Head -->
+  <ellipse cx="195" cy="170" rx="50" ry="45" fill="url(#pikachu-body)" stroke="#B8860B" stroke-width="2"/>
+  <!-- Eyes -->
+  <ellipse cx="178" cy="162" rx="10" ry="13" fill="#222"/>
+  <ellipse cx="212" cy="162" rx="10" ry="13" fill="#222"/>
+  <ellipse cx="181" cy="158" rx="5" ry="6" fill="white"/>
+  <ellipse cx="215" cy="158" r="5" fill="white"/>
+  <circle cx="175" cy="168" r="2" fill="white" opacity="0.5"/>
+  <circle cx="209" cy="168" r="2" fill="white" opacity="0.5"/>
+  <!-- Cheeks -->
+  <circle cx="155" cy="180" r="14" fill="url(#pikachu-cheek)" opacity="0.8"/>
+  <circle cx="235" cy="180" r="14" fill="url(#pikachu-cheek)" opacity="0.8"/>
+  <!-- Nose -->
+  <ellipse cx="195" cy="173" rx="4" ry="3" fill="#222"/>
+  <!-- Mouth -->
+  <path d="M185 180 Q195 190 205 180" fill="none" stroke="#222" stroke-width="2" stroke-linecap="round"/>
+  <path d="M185 180 Q180 184 178 180" fill="none" stroke="#222" stroke-width="1.5"/>
+  <path d="M205 180 Q210 184 212 180" fill="none" stroke="#222" stroke-width="1.5"/>
+  <!-- Arms -->
+  <path d="M145 240 Q125 245 115 235 Q110 230 118 228 Q125 232 130 235 Q135 238 145 235Z" fill="url(#pikachu-body)" stroke="#B8860B" stroke-width="1.5"/>
+  <path d="M245 240 Q265 245 275 235 Q280 230 272 228 Q265 232 260 235 Q255 238 245 235Z" fill="url(#pikachu-body)" stroke="#B8860B" stroke-width="1.5"/>
+  <!-- Feet -->
+  <ellipse cx="170" cy="320" rx="22" ry="10" fill="url(#pikachu-body)" stroke="#B8860B" stroke-width="1.5"/>
+  <ellipse cx="220" cy="320" rx="22" ry="10" fill="url(#pikachu-body)" stroke="#B8860B" stroke-width="1.5"/>
+  <!-- Back stripe -->
+  <path d="M165 230 Q170 220 180 225" fill="#B8860B" opacity="0.4"/>
+  <path d="M210 225 Q220 220 225 230" fill="#B8860B" opacity="0.4"/>
+  <!-- Name label -->
+  <text x="200" y="390" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#B8860B">PIKACHU</text>
+  <text x="200" y="22" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#FFD700">Electric</text>
+</svg>
