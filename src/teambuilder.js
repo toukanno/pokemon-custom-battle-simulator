@@ -145,4 +145,73 @@ function listAvailablePokemon() {
   return Object.keys(POKEDEX);
 }
 
-module.exports = { POKEDEX, buildPokemon, buildTeam, validateTeam, getPokedexEntry, listAvailablePokemon };
+function calculateBaseStatTotal(species) {
+  return Object.values(species.baseStats).reduce((sum, value) => sum + value, 0);
+}
+
+function selectBestMovesForSpecies(species, movePool, moveCount = 4) {
+  const scoredMoves = movePool
+    .map(([moveId, move]) => {
+      const stabBonus = species.types.includes(move.type) ? 1.5 : 1;
+      const adjustedPower = (move.power || 0) * (move.accuracy ? move.accuracy / 100 : 1);
+      return { moveId, score: adjustedPower * stabBonus };
+    })
+    .sort((a, b) => b.score - a.score);
+
+  return scoredMoves.slice(0, moveCount).map(({ moveId }) => moveId);
+}
+
+function buildStJohnsSystemTeam(options = {}) {
+  const teamSize = options.teamSize ?? 6;
+  const level = options.level ?? 50;
+
+  if (teamSize < 1 || teamSize > 6) return null;
+
+  const movePool = Object.entries(MOVES).filter(([, move]) => move.power > 0);
+
+  const rankedSpecies = Object.entries(POKEDEX)
+    .map(([speciesId, species]) => ({
+      speciesId,
+      species,
+      bst: calculateBaseStatTotal(species),
+    }))
+    .sort((a, b) => b.bst - a.bst);
+
+  const selected = [];
+  const coveredTypes = new Set();
+
+  for (const candidate of rankedSpecies) {
+    if (selected.length >= teamSize) break;
+
+    const introducesNewType = candidate.species.types.some((type) => !coveredTypes.has(type));
+    if (introducesNewType || selected.length + (rankedSpecies.length - selected.length) <= teamSize) {
+      selected.push(candidate);
+      for (const type of candidate.species.types) coveredTypes.add(type);
+    }
+  }
+
+  while (selected.length < teamSize) {
+    const next = rankedSpecies.find((candidate) => !selected.some((picked) => picked.speciesId === candidate.speciesId));
+    if (!next) break;
+    selected.push(next);
+  }
+
+  return buildTeam(
+    selected.map(({ speciesId, species }) => ({
+      species: speciesId,
+      level,
+      moves: selectBestMovesForSpecies(species, movePool, 4),
+    }))
+  );
+}
+
+module.exports = {
+  POKEDEX,
+  buildPokemon,
+  buildTeam,
+  validateTeam,
+  getPokedexEntry,
+  listAvailablePokemon,
+  calculateBaseStatTotal,
+  buildStJohnsSystemTeam,
+};
