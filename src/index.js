@@ -5,6 +5,10 @@ const { TYPES, TYPE_EFFECTIVENESS, getEffectiveness, getEffectivenessMessage } =
 const { calculateDamage, getCriticalHitChance, calculateRecoilDamage, calculateConfusionDamage } = require('./damage');
 const { POKEDEX, buildPokemon, buildTeam, validateTeam, getPokedexEntry, listAvailablePokemon, listPokemonByGeneration, filterPokedexByGeneration, listPokemonUpToGeneration, calculateBaseStatTotal, buildStJohnsSystemTeam } = require('./teambuilder');
 const { GENERATIONS, getGeneration, getGenerationByYear, listGenerations, getYearForGeneration, isGenerationValid } = require('./generation');
+const { BattleAnalytics } = require('./battleAnalytics');
+const { InfoGatherer } = require('./infoGatherer');
+const { MetaAnalyzer } = require('./metaAnalyzer');
+const { MatchupScout } = require('./matchupScout');
 
 module.exports = {
   Pokemon,
@@ -38,4 +42,8 @@ module.exports = {
   listGenerations,
   getYearForGeneration,
   isGenerationValid,
+  BattleAnalytics,
+  InfoGatherer,
+  MetaAnalyzer,
+  MatchupScout,
 };
