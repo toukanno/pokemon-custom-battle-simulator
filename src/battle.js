@@ -1,5 +1,5 @@
 const { calculateDamage } = require('./damage');
-const { getEffectivenessMessage } = require('./types');
+const { getEffectiveness, getEffectivenessMessage } = require('./types');
 const { MOVE_CATEGORIES, getMoveById } = require('./moves');
 
 class Battle {
@@ -110,12 +110,13 @@ class Battle {
       return;
     }
 
-    if (!attacker.canMove()) {
-      if (attacker.status === 'paralysis') this.addLog(`${attacker.name} is paralyzed! It can't move!`);
-      else if (attacker.status === 'freeze') this.addLog(`${attacker.name} is frozen solid!`);
-      else if (attacker.status === 'sleep') this.addLog(`${attacker.name} is fast asleep!`);
-      else if (attacker.volatileStatus.has('confusion')) this.addLog(`${attacker.name} hurt itself in confusion!`);
-      else if (attacker.volatileStatus.has('flinch')) this.addLog(`${attacker.name} flinched and couldn't move!`);
+    const moveCheck = attacker.canMove();
+    if (!moveCheck.able) {
+      if (moveCheck.reason === 'paralysis') this.addLog(`${attacker.name} is paralyzed! It can't move!`);
+      else if (moveCheck.reason === 'freeze') this.addLog(`${attacker.name} is frozen solid!`);
+      else if (moveCheck.reason === 'sleep') this.addLog(`${attacker.name} is fast asleep!`);
+      else if (moveCheck.reason === 'confusion') this.addLog(`${attacker.name} hurt itself in confusion!`);
+      else if (moveCheck.reason === 'flinch') this.addLog(`${attacker.name} flinched and couldn't move!`);
       return;
     }
 
@@ -123,9 +124,9 @@ class Battle {
 
     // Accuracy check
     if (move.accuracy !== null) {
-      const accuracyStat = attacker.getEffectiveStat('accuracy') || 1;
-      const evasionStat = defender.getEffectiveStat('evasion') || 1;
-      const hitChance = (move.accuracy / 100) * (accuracyStat / evasionStat);
+      const accuracyMultiplier = attacker.getEffectiveStat('accuracy');
+      const evasionMultiplier = defender.getEffectiveStat('evasion');
+      const hitChance = (move.accuracy / 100) * (accuracyMultiplier / evasionMultiplier);
       if (Math.random() > hitChance) {
         this.addLog(`${attacker.name}'s attack missed!`);
         return;
@@ -203,7 +204,7 @@ class Battle {
 
   switchPokemon(player, index) {
     const pokemon = player.team[index];
-    if (!pokemon || !pokemon.isAlive) {
+    if (!pokemon || !pokemon.isAlive || pokemon === player.active) {
       this.addLog('Cannot switch to that Pokemon!');
       return false;
     }
@@ -211,6 +212,7 @@ class Battle {
     const previous = player.active;
     previous.resetStatModifiers();
     previous.volatileStatus.clear();
+    previous.toxicCounter = 0;
 
     player.active = pokemon;
     this.addLog(`${previous.name} was withdrawn! Go, ${pokemon.name}!`);
@@ -224,7 +226,8 @@ class Battle {
     const pokemon = player.active;
 
     if (player.hazards.stealthRock) {
-      const damage = Math.floor(pokemon.stats.hp * 0.125);
+      const effectiveness = getEffectiveness('rock', pokemon.types);
+      const damage = Math.max(1, Math.floor(pokemon.stats.hp * effectiveness * 0.125));
       pokemon.takeDamage(damage);
       this.addLog(`${pokemon.name} was hurt by Stealth Rock! (${damage} damage)`);
     }
