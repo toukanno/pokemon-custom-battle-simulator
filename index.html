@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pokemon Custom Battle Simulator</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#1a1a2e;color:#e0e0e0;font-family:'Press Start 2P',monospace;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:10px}
+h1{font-size:14px;margin:10px 0;color:#ffd700;text-align:center;text-shadow:2px 2px #000}
+.screen{width:100%;max-width:640px;background:#2a2a4a;border:4px solid #4a4a6a;border-radius:12px;overflow:hidden;box-shadow:0 0 30px rgba(100,100,255,.2)}
+.battle-field{position:relative;height:260px;background:linear-gradient(180deg,#3a7ecf 0%,#3a7ecf 50%,#5ab55a 50%,#4a9a4a 100%);overflow:hidden}
+.pokemon-slot{position:absolute;text-align:center}
+.pokemon-slot.opponent{top:20px;right:30px}
+.pokemon-slot.player{bottom:20px;left:30px}
+.pokemon-sprite{font-size:48px;filter:drop-shadow(2px 2px 2px rgba(0,0,0,.5));transition:transform .3s}
+.pokemon-sprite.hit{animation:shake .3s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+@keyframes faint{to{opacity:0;transform:translateY(30px)}}
+.hp-bar-container{background:#333;border:2px solid #555;border-radius:4px;height:14px;width:140px;margin:4px auto;position:relative}
+.hp-bar{height:100%;border-radius:2px;transition:width .5s;background:#4caf50}
+.hp-bar.yellow{background:#ff9800}
+.hp-bar.red{background:#f44336}
+.hp-text{font-size:7px;position:absolute;right:4px;top:1px;color:#fff;text-shadow:1px 1px #000;z-index:1}
+.poke-name{font-size:9px;margin-bottom:2px;text-shadow:1px 1px #000}
+.status-badge{font-size:7px;padding:1px 4px;border-radius:3px;margin-left:4px;color:#fff}
+.status-badge.burn{background:#e65100}
+.status-badge.paralysis{background:#f9a825}
+.status-badge.poison,.status-badge.toxic{background:#7b1fa2}
+.status-badge.freeze{background:#0288d1}
+.status-badge.sleep{background:#616161}
+.team-balls{display:flex;gap:3px;justify-content:center;margin-top:4px}
+.ball{width:10px;height:10px;border-radius:50%;background:#f44336;border:1px solid #fff}
+.ball.fainted{background:#555;border-color:#777}
+.panel{padding:12px;background:#1e1e3a}
+.log-box{height:80px;overflow-y:auto;padding:8px;margin-bottom:8px;background:#111;border:2px solid #333;border-radius:6px;font-size:8px;line-height:1.8}
+.log-box p{margin:2px 0}
+.log-box .eff{color:#ff6}
+.log-box .crit{color:#f66}
+.log-box .info{color:#6cf}
+.log-box .turn-header{color:#ffd700}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.btn{font-family:'Press Start 2P',monospace;font-size:8px;padding:10px 6px;border:2px solid #555;border-radius:6px;cursor:pointer;transition:all .15s;text-align:center;color:#fff}
+.btn:hover:not(:disabled){transform:scale(1.03);filter:brightness(1.2)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.fire{background:#c62828}.btn.water{background:#1565c0}.btn.grass{background:#2e7d32}
+.btn.electric{background:#f9a825;color:#000}.btn.ice{background:#0097a7}.btn.fighting{background:#bf360c}
+.btn.poison{background:#6a1b9a}.btn.ground{background:#8d6e63}.btn.flying{background:#5c6bc0}
+.btn.psychic{background:#ad1457}.btn.bug{background:#558b2f}.btn.rock{background:#795548}
+.btn.ghost{background:#4527a0}.btn.dragon{background:#283593}.btn.dark{background:#37474f}
+.btn.steel{background:#546e7a}.btn.fairy{background:#ec407a}.btn.normal{background:#757575}
+.btn.switch-btn{background:#37474f;border-color:#607d8b}
+.btn.action-btn{background:#1b5e20;border-color:#4caf50;grid-column:span 2}
+.setup-screen{padding:16px;font-size:8px}
+.setup-screen h2{font-size:11px;color:#ffd700;margin-bottom:12px}
+.setup-screen label{display:block;margin:6px 0 3px;color:#aaa}
+.setup-screen select,.setup-screen input{font-family:'Press Start 2P',monospace;font-size:8px;padding:6px;background:#111;color:#fff;border:2px solid #555;border-radius:4px;width:100%}
+.team-setup{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.pokemon-card{background:#1a1a3a;border:2px solid #444;border-radius:8px;padding:8px}
+.pokemon-card h3{font-size:8px;color:#ffd700;margin-bottom:6px}
+.move-select{margin:3px 0}
+.start-btn{font-family:'Press Start 2P',monospace;font-size:10px;padding:12px 24px;background:#c62828;color:#fff;border:3px solid #f44336;border-radius:8px;cursor:pointer;display:block;margin:10px auto 0;width:80%}
+.start-btn:hover{background:#e53935}
+.tab-bar{display:flex;gap:4px;margin-bottom:10px}
+.tab{font-family:'Press Start 2P',monospace;font-size:8px;padding:8px 12px;background:#333;color:#aaa;border:2px solid #555;border-radius:6px 6px 0 0;cursor:pointer}
+.tab.active{background:#1e1e3a;color:#ffd700;border-bottom-color:#1e1e3a}
+.switch-panel{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+.switch-panel .btn{font-size:7px;padding:8px 4px}
+.auto-btn{font-family:'Press Start 2P',monospace;font-size:8px;padding:8px;background:#4527a0;color:#fff;border:2px solid #7c4dff;border-radius:6px;cursor:pointer;margin-top:6px;width:100%}
+.auto-btn:hover{background:#5e35b1}
+.type-badge{font-size:6px;padding:1px 3px;border-radius:2px;color:#fff;margin:0 1px}
+</style>
+</head>
+<body>
+<h1>POKEMON CUSTOM BATTLE SIMULATOR</h1>
+<div class="screen" id="app"></div>
+
+<script>
+// ============= ENGINE (inlined from src/) =============
+const TYPES={NORMAL:'normal',FIRE:'fire',WATER:'water',ELECTRIC:'electric',GRASS:'grass',ICE:'ice',FIGHTING:'fighting',POISON:'poison',GROUND:'ground',FLYING:'flying',PSYCHIC:'psychic',BUG:'bug',ROCK:'rock',GHOST:'ghost',DRAGON:'dragon',DARK:'dark',STEEL:'steel',FAIRY:'fairy'};
+const TYPE_EFFECTIVENESS={fire:{grass:2,water:.5,fire:.5,ice:2,bug:2,steel:2,rock:.5,dragon:.5},water:{fire:2,water:.5,grass:.5,ground:2,rock:2,dragon:.5},grass:{water:2,fire:.5,grass:.5,ground:2,rock:2,flying:.5,poison:.5,bug:.5,steel:.5,dragon:.5},electric:{water:2,electric:.5,grass:.5,ground:0,flying:2,dragon:.5},ice:{grass:2,ice:.5,ground:2,flying:2,dragon:2,fire:.5,water:.5,steel:.5},fighting:{normal:2,ice:2,rock:2,dark:2,steel:2,poison:.5,flying:.5,psychic:.5,bug:.5,ghost:0,fairy:.5},poison:{grass:2,fairy:2,poison:.5,ground:.5,rock:.5,ghost:.5,steel:0},ground:{fire:2,electric:2,poison:2,rock:2,steel:2,grass:.5,bug:.5,flying:0},flying:{grass:2,fighting:2,bug:2,electric:.5,rock:.5,steel:.5},psychic:{fighting:2,poison:2,psychic:.5,steel:.5,dark:0},bug:{grass:2,psychic:2,dark:2,fire:.5,fighting:.5,poison:.5,flying:.5,ghost:.5,steel:.5,fairy:.5},rock:{fire:2,ice:2,flying:2,bug:2,fighting:.5,ground:.5,steel:.5},ghost:{psychic:2,ghost:2,normal:0,dark:.5},dragon:{dragon:2,steel:.5,fairy:0},dark:{psychic:2,ghost:2,fighting:.5,dark:.5,fairy:.5},steel:{ice:2,rock:2,fairy:2,fire:.5,water:.5,electric:.5,steel:.5},fairy:{fighting:2,dragon:2,dark:2,fire:.5,poison:.5,steel:.5},normal:{rock:.5,ghost:0,steel:.5}};
+function getEffectiveness(at,dt){let m=1;for(const d of dt){const c=TYPE_EFFECTIVENESS[at];if(c&&c[d]!==undefined)m*=c[d]}return m}
+function getEffectivenessMessage(m){if(m===0)return'こうかが ないようだ...';if(m<1)return'こうかは いまひとつだ...';if(m>1)return'こうかは ばつぐんだ!';return null}
+
+const MOVE_CATEGORIES={PHYSICAL:'physical',SPECIAL:'special',STATUS:'status'};
+const MOVES={tackle:{name:'たいあたり',type:TYPES.NORMAL,category:MOVE_CATEGORIES.PHYSICAL,power:40,accuracy:100,pp:35,priority:0,effects:[]},flamethrower:{name:'かえんほうしゃ',type:TYPES.FIRE,category:MOVE_CATEGORIES.SPECIAL,power:90,accuracy:100,pp:15,priority:0,effects:[{type:'status',status:'burn',chance:10,target:'opponent'}]},thunderbolt:{name:'10まんボルト',type:TYPES.ELECTRIC,category:MOVE_CATEGORIES.SPECIAL,power:90,accuracy:100,pp:15,priority:0,effects:[{type:'status',status:'paralysis',chance:10,target:'opponent'}]},iceBeam:{name:'れいとうビーム',type:TYPES.ICE,category:MOVE_CATEGORIES.SPECIAL,power:90,accuracy:100,pp:10,priority:0,effects:[{type:'status',status:'freeze',chance:10,target:'opponent'}]},earthquake:{name:'じしん',type:TYPES.GROUND,category:MOVE_CATEGORIES.PHYSICAL,power:100,accuracy:100,pp:10,priority:0,effects:[]},swordsDance:{name:'つるぎのまい',type:TYPES.NORMAL,category:MOVE_CATEGORIES.STATUS,power:0,accuracy:null,pp:20,priority:0,effects:[{type:'stat',stat:'attack',stages:2,target:'self'}]},willOWisp:{name:'おにび',type:TYPES.FIRE,category:MOVE_CATEGORIES.STATUS,power:0,accuracy:85,pp:15,priority:0,effects:[{type:'status',status:'burn',chance:100,target:'opponent'}]},quickAttack:{name:'でんこうせっか',type:TYPES.NORMAL,category:MOVE_CATEGORIES.PHYSICAL,power:40,accuracy:100,pp:30,priority:1,effects:[]},protect:{name:'まもる',type:TYPES.NORMAL,category:MOVE_CATEGORIES.STATUS,power:0,accuracy:null,pp:10,priority:4,effects:[{type:'protect',target:'self'}]},toxicSpikes:{name:'どくびし',type:TYPES.POISON,category:MOVE_CATEGORIES.STATUS,power:0,accuracy:null,pp:20,priority:0,effects:[{type:'hazard',hazard:'toxicSpikes',target:'opponent'}]},stealthRock:{name:'ステルスロック',type:TYPES.ROCK,category:MOVE_CATEGORIES.STATUS,power:0,accuracy:null,pp:20,priority:0,effects:[{type:'hazard',hazard:'stealthRock',target:'opponent'}]},recover:{name:'じこさいせい',type:TYPES.NORMAL,category:MOVE_CATEGORIES.STATUS,power:0,accuracy:null,pp:10,priority:0,effects:[{type:'heal',amount:.5,target:'self'}]},dragonClaw:{name:'ドラゴンクロー',type:TYPES.DRAGON,category:MOVE_CATEGORIES.PHYSICAL,power:80,accuracy:100,pp:15,priority:0,effects:[]},shadowBall:{name:'シャドーボール',type:TYPES.GHOST,category:MOVE_CATEGORIES.SPECIAL,power:80,accuracy:100,pp:15,priority:0,effects:[{type:'stat',stat:'specialDefense',stages:-1,chance:20,target:'opponent'}]},ironTail:{name:'アイアンテール',type:TYPES.STEEL,category:MOVE_CATEGORIES.PHYSICAL,power:100,accuracy:75,pp:15,priority:0,effects:[{type:'stat',stat:'defense',stages:-1,chance:30,target:'opponent'}]},surf:{name:'なみのり',type:TYPES.WATER,category:MOVE_CATEGORIES.SPECIAL,power:90,accuracy:100,pp:15,priority:0,effects:[]},leafBlade:{name:'リーフブレード',type:TYPES.GRASS,category:MOVE_CATEGORIES.PHYSICAL,power:90,accuracy:100,pp:15,priority:0,critRatio:2,effects:[]},toxic:{name:'どくどく',type:TYPES.POISON,category:MOVE_CATEGORIES.STATUS,power:0,accuracy:90,pp:10,priority:0,effects:[{type:'status',status:'toxic',chance:100,target:'opponent'}]}};
+function getMoveById(id){return MOVES[id]||null}
+
+const NATURES={hardy:{},lonely:{attack:1.1,defense:.9},brave:{attack:1.1,speed:.9},adamant:{attack:1.1,specialAttack:.9},naughty:{attack:1.1,specialDefense:.9},bold:{defense:1.1,attack:.9},relaxed:{defense:1.1,speed:.9},impish:{defense:1.1,specialAttack:.9},lax:{defense:1.1,specialDefense:.9},timid:{speed:1.1,attack:.9},hasty:{speed:1.1,defense:.9},jolly:{speed:1.1,specialAttack:.9},naive:{speed:1.1,specialDefense:.9},modest:{specialAttack:1.1,attack:.9},mild:{specialAttack:1.1,defense:.9},quiet:{specialAttack:1.1,speed:.9},rash:{specialAttack:1.1,specialDefense:.9},calm:{specialDefense:1.1,attack:.9},gentle:{specialDefense:1.1,defense:.9},sassy:{specialDefense:1.1,speed:.9},careful:{specialDefense:1.1,specialAttack:.9},bashful:{},quirky:{},serious:{},docile:{}};
+
+class Pokemon{
+  constructor({name,types,baseStats,level=50,moves=[],nature='hardy',evs={},ivs={},generation=null}){
+    this.name=name;this.types=types;this.baseStats=baseStats;this.level=level;this.moves=moves;this.nature=nature;this.generation=generation;
+    this.evs={hp:evs.hp||0,attack:evs.attack||0,defense:evs.defense||0,specialAttack:evs.specialAttack||0,specialDefense:evs.specialDefense||0,speed:evs.speed||0};
+    this.ivs={hp:ivs.hp!==undefined?ivs.hp:31,attack:ivs.attack!==undefined?ivs.attack:31,defense:ivs.defense!==undefined?ivs.defense:31,specialAttack:ivs.specialAttack!==undefined?ivs.specialAttack:31,specialDefense:ivs.specialDefense!==undefined?ivs.specialDefense:31,speed:ivs.speed!==undefined?ivs.speed:31};
+    this.stats=this.calculateStats();this.currentHp=this.stats.hp;this.status=null;
+    this.statModifiers={attack:0,defense:0,specialAttack:0,specialDefense:0,speed:0,accuracy:0,evasion:0};
+    this.isAlive=true;this.volatileStatus=new Set();this.toxicCounter=0;
+  }
+  calculateStats(){const n=NATURES[this.nature]||{};return{hp:this.calcHp(),attack:this.calcStat('attack',n),defense:this.calcStat('defense',n),specialAttack:this.calcStat('specialAttack',n),specialDefense:this.calcStat('specialDefense',n),speed:this.calcStat('speed',n)}}
+  calcHp(){const b=this.baseStats.hp,iv=this.ivs.hp,ev=this.evs.hp;return Math.floor(((2*b+iv+Math.floor(ev/4))*this.level)/100)+this.level+10}
+  calcStat(s,n){const b=this.baseStats[s],iv=this.ivs[s],ev=this.evs[s],v=Math.floor(((2*b+iv+Math.floor(ev/4))*this.level)/100)+5;return Math.floor(v*(n[s]||1))}
+  getEffectiveStat(s){const st=this.statModifiers[s];let m;if(s==='accuracy'){m=st>=0?(3+st)/3:3/(3-st);return m}else if(s==='evasion'){m=st>=0?3/(3+st):(3-st)/3;return m}else{m=st>=0?(2+st)/2:2/(2-st)}return Math.floor(this.stats[s]*m)}
+  modifyStat(s,stages){const old=this.statModifiers[s];this.statModifiers[s]=Math.max(-6,Math.min(6,old+stages));const nw=this.statModifiers[s];if(nw===old&&stages>0)return`${this.name}の ${s}は もうあがらない!`;if(nw===old&&stages<0)return`${this.name}の ${s}は もうさがらない!`;const mag=Math.abs(stages);let d;if(mag===1)d=stages>0?'あがった':'さがった';else if(mag===2)d=stages>0?'ぐーんと あがった':'がくっと さがった';else d=stages>0?'ぐぐーんと あがった':'がくーんと さがった';return`${this.name}の ${s}が ${d}!`}
+  takeDamage(a){this.currentHp=Math.max(0,this.currentHp-a);if(this.currentHp===0)this.isAlive=false;return this.currentHp}
+  heal(a){if(!this.isAlive)return 0;const mx=this.stats.hp-this.currentHp,h=Math.min(a,mx);this.currentHp+=h;return h}
+  setStatus(s){if(this.status!==null)return false;if(s==='burn'&&this.types.includes(TYPES.FIRE))return false;if(s==='freeze'&&this.types.includes(TYPES.ICE))return false;if(s==='paralysis'&&this.types.includes(TYPES.ELECTRIC))return false;if((s==='poison'||s==='toxic')&&(this.types.includes(TYPES.POISON)||this.types.includes(TYPES.STEEL)))return false;this.status=s;return true}
+  clearStatus(){if(this.status==='toxic')this.toxicCounter=0;this.status=null}
+  resetStatModifiers(){this.statModifiers={attack:0,defense:0,specialAttack:0,specialDefense:0,speed:0,accuracy:0,evasion:0}}
+  getHpPercentage(){return(this.currentHp/this.stats.hp)*100}
+  canMove(){if(!this.isAlive)return{able:false,reason:'fainted'};if(this.volatileStatus.has('flinch')){this.volatileStatus.delete('flinch');return{able:false,reason:'flinch'}}if(this.status==='paralysis'&&Math.random()<.25)return{able:false,reason:'paralysis'};if(this.status==='freeze'){if(Math.random()<.2){this.clearStatus();return{able:true}}return{able:false,reason:'freeze'}}if(this.status==='sleep'){if(Math.random()<.33){this.clearStatus();return{able:true}}return{able:false,reason:'sleep'}}if(this.volatileStatus.has('confusion')&&Math.random()<.33)return{able:false,reason:'confusion'};return{able:true}}
+}
+
+function calculateDamage(atk,def,move,opts={}){if(move.category===MOVE_CATEGORIES.STATUS)return{damage:0,effectiveness:1,isCrit:false,stab:false};const lv=atk.level,pw=move.power;let a,d;if(move.category===MOVE_CATEGORIES.PHYSICAL){a=atk.getEffectiveStat('attack');d=def.getEffectiveStat('defense')}else{a=atk.getEffectiveStat('specialAttack');d=def.getEffectiveStat('specialDefense')}if(atk.status==='burn'&&move.category===MOVE_CATEGORIES.PHYSICAL)a=Math.floor(a*.5);const base=Math.floor(((2*lv/5+2)*pw*a/d)/50)+2;const stab=atk.types.includes(move.type)?1.5:1;const eff=getEffectiveness(move.type,def.types);const cc=[1/24,1/8,1/2,1];const cr=cc[Math.min(move.critRatio||0,3)];const isCrit=opts.forceCrit||(!opts.noCrit&&Math.random()<cr);const cm=isCrit?1.5:1;const rn=opts.fixedRandom||(0.85+Math.random()*.15);const dmg=Math.floor(base*stab*eff*cm*rn);return{damage:Math.max(1,dmg),effectiveness:eff,isCrit,stab:stab>1}}
+
+const POKEDEX={
+  charizard:{name:'リザードン',types:[TYPES.FIRE,TYPES.FLYING],baseStats:{hp:78,attack:84,defense:78,specialAttack:109,specialDefense:85,speed:100},sprite:'🔥',gen:1},
+  blastoise:{name:'カメックス',types:[TYPES.WATER],baseStats:{hp:79,attack:83,defense:100,specialAttack:85,specialDefense:105,speed:78},sprite:'🐢',gen:1},
+  venusaur:{name:'フシギバナ',types:[TYPES.GRASS,TYPES.POISON],baseStats:{hp:80,attack:82,defense:83,specialAttack:100,specialDefense:100,speed:80},sprite:'🌿',gen:1},
+  pikachu:{name:'ピカチュウ',types:[TYPES.ELECTRIC],baseStats:{hp:35,attack:55,defense:40,specialAttack:50,specialDefense:50,speed:90},sprite:'⚡',gen:1},
+  gengar:{name:'ゲンガー',types:[TYPES.GHOST,TYPES.POISON],baseStats:{hp:60,attack:65,defense:60,specialAttack:130,specialDefense:75,speed:110},sprite:'👻',gen:1},
+  dragonite:{name:'カイリュー',types:[TYPES.DRAGON,TYPES.FLYING],baseStats:{hp:91,attack:134,defense:95,specialAttack:100,specialDefense:100,speed:80},sprite:'🐉',gen:1},
+  snorlax:{name:'カビゴン',types:[TYPES.NORMAL],baseStats:{hp:160,attack:110,defense:65,specialAttack:65,specialDefense:110,speed:30},sprite:'😴',gen:1},
+  garchomp:{name:'ガブリアス',types:[TYPES.DRAGON,TYPES.GROUND],baseStats:{hp:108,attack:130,defense:95,specialAttack:80,specialDefense:85,speed:102},sprite:'🦈',gen:4},
+  lucario:{name:'ルカリオ',types:[TYPES.FIGHTING,TYPES.STEEL],baseStats:{hp:70,attack:110,defense:70,specialAttack:115,specialDefense:70,speed:90},sprite:'🥊',gen:4},
+  togekiss:{name:'トゲキッス',types:[TYPES.FAIRY,TYPES.FLYING],baseStats:{hp:85,attack:50,defense:95,specialAttack:120,specialDefense:115,speed:80},sprite:'🕊️',gen:4},
+};
+
+const POKEMON_MOVES={
+  charizard:['flamethrower','earthquake','dragonClaw','swordsDance'],
+  blastoise:['surf','iceBeam','toxic','protect'],
+  venusaur:['leafBlade','toxic','recover','earthquake'],
+  pikachu:['thunderbolt','quickAttack','ironTail','protect'],
+  gengar:['shadowBall','thunderbolt','toxic','protect'],
+  dragonite:['dragonClaw','earthquake','iceBeam','quickAttack'],
+  snorlax:['earthquake','iceBeam','recover','toxic'],
+  garchomp:['earthquake','dragonClaw','swordsDance','ironTail'],
+  lucario:['ironTail','earthquake','swordsDance','quickAttack'],
+  togekiss:['iceBeam','flamethrower','thunderbolt','protect'],
+};
+
+const TYPE_JP={normal:'ノーマル',fire:'ほのお',water:'みず',electric:'でんき',grass:'くさ',ice:'こおり',fighting:'かくとう',poison:'どく',ground:'じめん',flying:'ひこう',psychic:'エスパー',bug:'むし',rock:'いわ',ghost:'ゴースト',dragon:'ドラゴン',dark:'あく',steel:'はがね',fairy:'フェアリー'};
+const STATUS_JP={burn:'やけど',paralysis:'まひ',freeze:'こおり',poison:'どく',toxic:'もうどく',sleep:'ねむり'};
+
+// ============= BATTLE ENGINE =============
+class BattleEngine{
+  constructor(p1Team,p2Team){
+    this.p1={team:p1Team,active:p1Team[0],hazards:{}};
+    this.p2={team:p2Team,active:p2Team[0],hazards:{}};
+    this.turn=0;this.log=[];this.isOver=false;this.winner=null;this.faintedSet=new Set();
+  }
+  addLog(msg,cls=''){this.log.push({msg,cls})}
+  getOpponent(p){return p===this.p1?this.p2:this.p1}
+  executeTurn(p1a,p2a){
+    if(this.isOver)return;this.turn++;this.addLog(`--- ターン ${this.turn} ---`,'turn-header');
+    const acts=this.order(p1a,p2a);
+    for(const a of acts){if(this.isOver)break;this.exec(a.player,a.action);this.checkFainted()}
+    this.endTurn();this.checkWin();
+  }
+  order(a1,a2){
+    const acts=[{player:this.p1,action:a1},{player:this.p2,action:a2}];
+    if(a1.type==='switch'&&a2.type!=='switch')return acts;
+    if(a2.type==='switch'&&a1.type!=='switch')return[acts[1],acts[0]];
+    if(a1.type==='move'&&a2.type==='move'){const m1=getMoveById(a1.moveId),m2=getMoveById(a2.moveId);if(m1&&m2&&m1.priority!==m2.priority)return m1.priority>m2.priority?acts:[acts[1],acts[0]]}
+    const s1=this.p1.active.getEffectiveStat('speed'),s2=this.p2.active.getEffectiveStat('speed');
+    if(s1!==s2)return s1>s2?acts:[acts[1],acts[0]];
+    return Math.random()<.5?acts:[acts[1],acts[0]];
+  }
+  exec(player,action){
+    if(!player.active.isAlive)return;
+    const opp=this.getOpponent(player);
+    if(action.type==='switch')this.switchPoke(player,action.pokemonIndex);
+    else if(action.type==='move')this.execMove(player,opp,action.moveId);
+  }
+  execMove(player,opp,moveId){
+    const atk=player.active,def=opp.active,move=getMoveById(moveId);
+    if(!move){this.addLog(`${atk.name}は わざをだせない!`);return}
+    const mc=atk.canMove();
+    if(!mc.able){
+      if(mc.reason==='paralysis')this.addLog(`${atk.name}は しびれて うごけない!`);
+      else if(mc.reason==='freeze')this.addLog(`${atk.name}は こおって うごけない!`);
+      else if(mc.reason==='sleep')this.addLog(`${atk.name}は ぐうぐう ねている!`);
+      else if(mc.reason==='confusion')this.addLog(`${atk.name}は こんらんしている!`);
+      else if(mc.reason==='flinch')this.addLog(`${atk.name}は ひるんで うごけない!`);
+      return;
+    }
+    this.addLog(`${atk.name}の ${move.name}!`,'info');
+    if(move.accuracy!==null){const am=atk.getEffectiveStat('accuracy'),em=def.getEffectiveStat('evasion'),hc=(move.accuracy/100)*(am/em);if(Math.random()>hc){this.addLog(`${atk.name}の こうげきは はずれた!`);return}}
+    if(def.volatileStatus.has('protect')){this.addLog(`${def.name}は みをまもった!`);return}
+    if(move.category!==MOVE_CATEGORIES.STATUS){const r=calculateDamage(atk,def,move);def.takeDamage(r.damage);this.addLog(`${def.name}に ${r.damage}ダメージ!`);if(r.isCrit)this.addLog('きゅうしょに あたった!','crit');const em=getEffectivenessMessage(r.effectiveness);if(em)this.addLog(em,'eff')}
+    this.applyEffects(atk,def,move,player,opp);
+  }
+  applyEffects(atk,def,move,player,opp){
+    for(const e of move.effects){
+      if(e.chance&&Math.random()*100>e.chance)continue;
+      const t=e.target==='self'?atk:def;
+      if(e.type==='status'){if(t.setStatus(e.status))this.addLog(`${t.name}は ${STATUS_JP[e.status]||e.status}になった!`)}
+      else if(e.type==='stat'){this.addLog(t.modifyStat(e.stat,e.stages))}
+      else if(e.type==='heal'){const h=atk.heal(Math.floor(atk.stats.hp*e.amount));if(h>0)this.addLog(`${atk.name}は HPを ${h}かいふくした!`)}
+      else if(e.type==='protect'){atk.volatileStatus.add('protect');this.addLog(`${atk.name}は みをまもっている!`)}
+      else if(e.type==='hazard'){const ts=e.target==='opponent'?opp:player;if(!ts.hazards[e.hazard]){ts.hazards[e.hazard]=1;this.addLog(`あいてのばに ${e.hazard}がまかれた!`)}else if(e.hazard==='toxicSpikes'&&ts.hazards[e.hazard]<2){ts.hazards[e.hazard]++;this.addLog(`あいてのばに ${e.hazard}がついかされた!`)}}
+    }
+  }
+  switchPoke(player,idx){
+    const p=player.team[idx];if(!p||!p.isAlive||p===player.active)return false;
+    const prev=player.active;prev.resetStatModifiers();prev.volatileStatus.clear();prev.toxicCounter=0;
+    player.active=p;this.addLog(`${prev.name} もどれ! ゆけ ${p.name}!`,'info');
+    this.applyHazards(player);return true;
+  }
+  applyHazards(player){
+    const p=player.active;
+    if(player.hazards.stealthRock){const e=getEffectiveness('rock',p.types),d=Math.max(1,Math.floor(p.stats.hp*e*.125));p.takeDamage(d);this.addLog(`${p.name}は ステルスロックで ${d}ダメージ!`)}
+    if(player.hazards.toxicSpikes&&!p.types.includes('flying')){if(p.types.includes('poison')){player.hazards.toxicSpikes=0;this.addLog(`${p.name}は どくびしを きゅうしゅうした!`)}else{const s=player.hazards.toxicSpikes>=2?'toxic':'poison';p.setStatus(s);this.addLog(`${p.name}は どくびしで ${STATUS_JP[s]}になった!`)}}
+  }
+  endTurn(){
+    for(const pl of[this.p1,this.p2]){const p=pl.active;if(!p.isAlive)continue;p.volatileStatus.delete('protect');
+      if(p.status==='burn'){const d=Math.max(1,Math.floor(p.stats.hp/16));p.takeDamage(d);this.addLog(`${p.name}は やけどで ${d}ダメージ!`)}
+      if(p.status==='poison'){const d=Math.max(1,Math.floor(p.stats.hp/8));p.takeDamage(d);this.addLog(`${p.name}は どくで ${d}ダメージ!`)}
+      if(p.status==='toxic'){if(!p.toxicCounter)p.toxicCounter=1;const d=Math.max(1,Math.floor(p.stats.hp*p.toxicCounter/16));p.takeDamage(d);p.toxicCounter++;this.addLog(`${p.name}は どくで ${d}ダメージ!`)}
+    }
+  }
+  checkFainted(){for(const pl of[this.p1,this.p2]){if(!pl.active.isAlive&&!this.faintedSet.has(pl.active)){this.addLog(`${pl.active.name}は たおれた!`,'crit');this.faintedSet.add(pl.active)}}}
+  checkWin(){
+    const a=this.p1.team.every(p=>!p.isAlive),b=this.p2.team.every(p=>!p.isAlive);
+    if(a&&b){this.isOver=true;this.winner='draw';this.addLog('ひきわけ!','turn-header')}
+    else if(a){this.isOver=true;this.winner='p2';this.addLog('あいてトレーナーの かち!','turn-header')}
+    else if(b){this.isOver=true;this.winner='p1';this.addLog('きみの かち!','turn-header')}
+  }
+  needsSwitch(player){return!player.active.isAlive&&player.team.some(p=>p.isAlive)}
+}
+
+// ============= AI =============
+function aiChooseAction(battle,aiPlayer){
+  const opp=battle.getOpponent(aiPlayer);
+  const active=aiPlayer.active;
+  if(!active.isAlive)return null;
+  let bestMove=null,bestScore=-Infinity;
+  for(const mid of active.moves){
+    const m=getMoveById(mid);if(!m)continue;
+    let score=0;
+    if(m.category!==MOVE_CATEGORIES.STATUS){
+      const eff=getEffectiveness(m.type,opp.active.types);
+      score=m.power*eff*(active.types.includes(m.type)?1.5:1)*(m.accuracy?m.accuracy/100:1);
+    }else{
+      score=30;
+      if(mid==='swordsDance'&&active.statModifiers.attack<4)score=60;
+      if(mid==='recover'&&active.getHpPercentage()<60)score=70;
+      if((mid==='toxic'||mid==='willOWisp')&&!opp.active.status)score=50;
+      if(mid==='protect')score=10;
+      if(mid==='stealthRock'&&!opp.hazards.stealthRock)score=55;
+    }
+    if(score>bestScore){bestScore=score;bestMove=mid}
+  }
+  return{type:'move',moveId:bestMove||active.moves[0]};
+}
+
+function aiChooseSwitch(aiPlayer){
+  for(let i=0;i<aiPlayer.team.length;i++){if(aiPlayer.team[i].isAlive&&aiPlayer.team[i]!==aiPlayer.active)return i}
+  return 0;
+}
+
+// ============= UI =============
+let battle=null,state='setup',playerTeamIds=[],aiTeamIds=[];
+const app=document.getElementById('app');
+
+function buildPokemon(id){
+  const spec=POKEDEX[id];
+  return new Pokemon({name:spec.name,types:spec.types,baseStats:spec.baseStats,level:50,moves:POKEMON_MOVES[id],nature:'hardy',generation:spec.gen});
+}
+
+function render(){
+  if(state==='setup')renderSetup();
+  else if(state==='battle')renderBattle();
+  else if(state==='switch')renderSwitch();
+}
+
+function renderSetup(){
+  const ids=Object.keys(POKEDEX);
+  let html=`<div class="setup-screen">
+    <h2>TEAM SELECT</h2>
+    <div class="team-setup">
+      <div>
+        <label>きみの チーム (3体えらぶ)</label>
+        ${ids.map(id=>{const p=POKEDEX[id];return`<div style="margin:4px 0"><label><input type="checkbox" class="p1check" value="${id}"> ${p.sprite} ${p.name} <span class="type-badge ${p.types[0]}" style="background:var(--c)">${TYPE_JP[p.types[0]]}</span>${p.types[1]?`<span class="type-badge ${p.types[1]}">${TYPE_JP[p.types[1]]}</span>`:''}</label></div>`}).join('')}
+      </div>
+      <div>
+        <label>あいての チーム (3体えらぶ)</label>
+        ${ids.map(id=>{const p=POKEDEX[id];return`<div style="margin:4px 0"><label><input type="checkbox" class="p2check" value="${id}"> ${p.sprite} ${p.name} <span class="type-badge ${p.types[0]}">${TYPE_JP[p.types[0]]}</span>${p.types[1]?`<span class="type-badge ${p.types[1]}">${TYPE_JP[p.types[1]]}</span>`:''}</label></div>`}).join('')}
+      </div>
+    </div>
+    <button class="auto-btn" onclick="autoSelect()">ランダム せんたく</button>
+    <button class="start-btn" onclick="startBattle()">バトル かいし!</button>
+  </div>`;
+  app.innerHTML=html;
+}
+
+window.autoSelect=function(){
+  const ids=Object.keys(POKEDEX);
+  const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+  const s1=shuffle([...ids]).slice(0,3),s2=shuffle([...ids]).slice(0,3);
+  document.querySelectorAll('.p1check').forEach(c=>c.checked=s1.includes(c.value));
+  document.querySelectorAll('.p2check').forEach(c=>c.checked=s2.includes(c.value));
+};
+
+window.startBattle=function(){
+  playerTeamIds=[...document.querySelectorAll('.p1check:checked')].map(c=>c.value);
+  aiTeamIds=[...document.querySelectorAll('.p2check:checked')].map(c=>c.value);
+  if(playerTeamIds.length<1||playerTeamIds.length>6){alert('チームを 1〜6体 えらんでください');return}
+  if(aiTeamIds.length<1||aiTeamIds.length>6){alert('あいてチームを 1〜6体 えらんでください');return}
+  const p1=playerTeamIds.map(buildPokemon),p2=aiTeamIds.map(buildPokemon);
+  battle=new BattleEngine(p1,p2);
+  state='battle';render();
+};
+
+function hpColor(pct){return pct>50?'':'yellow'||(pct>20?'yellow':'red')}
+function getHpClass(pct){if(pct>50)return'';if(pct>20)return'yellow';return'red'}
+
+function renderBattle(){
+  const p1=battle.p1,p2=battle.p2;
+  const p1pct=p1.active.getHpPercentage(),p2pct=p2.active.getHpPercentage();
+  const p1spec=Object.values(POKEDEX).find(s=>s.name===p1.active.name)||{sprite:'?'};
+  const p2spec=Object.values(POKEDEX).find(s=>s.name===p2.active.name)||{sprite:'?'};
+
+  let html=`<div class="battle-field">
+    <div class="pokemon-slot opponent">
+      <div class="poke-name">${p2.active.name} ${p2.active.status?`<span class="status-badge ${p2.active.status}">${STATUS_JP[p2.active.status]||p2.active.status}</span>`:''}</div>
+      <div class="hp-bar-container"><span class="hp-text">${p2.active.currentHp}/${p2.active.stats.hp}</span><div class="hp-bar ${getHpClass(p2pct)}" style="width:${p2pct}%"></div></div>
+      <div class="team-balls">${p2.team.map(p=>`<div class="ball ${p.isAlive?'':'fainted'}"></div>`).join('')}</div>
+      <div class="pokemon-sprite" id="opp-sprite">${p2spec.sprite}</div>
+    </div>
+    <div class="pokemon-slot player">
+      <div class="pokemon-sprite" id="player-sprite">${p1spec.sprite}</div>
+      <div class="poke-name">${p1.active.name} ${p1.active.status?`<span class="status-badge ${p1.active.status}">${STATUS_JP[p1.active.status]||p1.active.status}</span>`:''}</div>
+      <div class="hp-bar-container"><span class="hp-text">${p1.active.currentHp}/${p1.active.stats.hp}</span><div class="hp-bar ${getHpClass(p1pct)}" style="width:${p1pct}%"></div></div>
+      <div class="team-balls">${p1.team.map(p=>`<div class="ball ${p.isAlive?'':'fainted'}"></div>`).join('')}</div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="log-box" id="logbox">${battle.log.map(l=>`<p class="${l.cls}">${l.msg}</p>`).join('')}</div>`;
+
+  if(battle.isOver){
+    html+=`<button class="btn action-btn" onclick="resetGame()">もういちど あそぶ</button>`;
+  }else if(battle.needsSwitch(battle.p1)){
+    html+=`<div class="actions"><p style="grid-column:span 2;font-size:8px;text-align:center;margin:4px">つぎの ポケモンを えらべ!</p>`;
+    battle.p1.team.forEach((p,i)=>{if(p.isAlive&&p!==battle.p1.active)html+=`<button class="btn switch-btn" onclick="forceSwitch(${i})">${p.name} (HP:${p.currentHp}/${p.stats.hp})</button>`});
+    html+=`</div>`;
+  }else{
+    html+=`<div class="tab-bar"><div class="tab active" id="tab-fight" onclick="showTab('fight')">たたかう</div><div class="tab" id="tab-pokemon" onclick="showTab('pokemon')">ポケモン</div></div>`;
+    html+=`<div id="fight-panel" class="actions">`;
+    p1.active.moves.forEach(mid=>{const m=getMoveById(mid);if(m)html+=`<button class="btn ${m.type}" onclick="doMove('${mid}')">${m.name}<br><span style="font-size:6px">${TYPE_JP[m.type]} ${m.category==='status'?'変化':'威力:'+m.power}</span></button>`});
+    html+=`</div>`;
+    html+=`<div id="pokemon-panel" class="switch-panel" style="display:none">`;
+    battle.p1.team.forEach((p,i)=>{if(p!==battle.p1.active)html+=`<button class="btn switch-btn" ${!p.isAlive?'disabled':''} onclick="doSwitch(${i})">${p.name}<br><span style="font-size:6px">HP:${p.currentHp}/${p.stats.hp}</span></button>`});
+    html+=`</div>`;
+  }
+  html+=`</div>`;
+  app.innerHTML=html;
+  const lb=document.getElementById('logbox');if(lb)lb.scrollTop=lb.scrollHeight;
+}
+
+window.showTab=function(tab){
+  document.getElementById('fight-panel').style.display=tab==='fight'?'grid':'none';
+  document.getElementById('pokemon-panel').style.display=tab==='pokemon'?'grid':'none';
+  document.getElementById('tab-fight').classList.toggle('active',tab==='fight');
+  document.getElementById('tab-pokemon').classList.toggle('active',tab==='pokemon');
+};
+
+window.doMove=function(moveId){
+  if(battle.isOver)return;
+  const aiAction=aiChooseAction(battle,battle.p2);
+  battle.executeTurn({type:'move',moveId},aiAction);
+  afterTurn();
+};
+
+window.doSwitch=function(idx){
+  if(battle.isOver)return;
+  const aiAction=aiChooseAction(battle,battle.p2);
+  battle.executeTurn({type:'switch',pokemonIndex:idx},aiAction);
+  afterTurn();
+};
+
+window.forceSwitch=function(idx){
+  battle.switchPoke(battle.p1,idx);
+  battle.checkFainted();
+  if(battle.needsSwitch(battle.p2)){
+    const si=aiChooseSwitch(battle.p2);
+    battle.switchPoke(battle.p2,si);
+    battle.checkFainted();
+  }
+  render();
+};
+
+function afterTurn(){
+  if(battle.needsSwitch(battle.p2)){
+    const si=aiChooseSwitch(battle.p2);
+    battle.switchPoke(battle.p2,si);
+    battle.checkFainted();
+  }
+  render();
+}
+
+window.resetGame=function(){state='setup';battle=null;render()};
+
+render();
+</script>
+</body>
+</html>
