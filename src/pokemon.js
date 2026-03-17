@@ -1,13 +1,14 @@
 const { TYPES } = require('./types');
 
 class Pokemon {
-  constructor({ name, types, baseStats, level = 50, moves = [], nature = 'hardy', evs = {}, ivs = {} }) {
+  constructor({ name, types, baseStats, level = 50, moves = [], nature = 'hardy', evs = {}, ivs = {}, generation = null }) {
     this.name = name;
     this.types = types;
     this.baseStats = baseStats;
     this.level = level;
     this.moves = moves;
     this.nature = nature;
+    this.generation = generation;
 
     this.evs = {
       hp: evs.hp || 0,

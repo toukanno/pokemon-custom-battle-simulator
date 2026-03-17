@@ -1,57 +1,68 @@
 const { Pokemon } = require('./pokemon');
 const { MOVES, validateMoveset } = require('./moves');
 const { TYPES } = require('./types');
+const { isGenerationValid } = require('./generation');
 
 const POKEDEX = {
   charizard: {
     name: 'Charizard',
     types: [TYPES.FIRE, TYPES.FLYING],
     baseStats: { hp: 78, attack: 84, defense: 78, specialAttack: 109, specialDefense: 85, speed: 100 },
+    generation: 1,
   },
   blastoise: {
     name: 'Blastoise',
     types: [TYPES.WATER],
     baseStats: { hp: 79, attack: 83, defense: 100, specialAttack: 85, specialDefense: 105, speed: 78 },
+    generation: 1,
   },
   venusaur: {
     name: 'Venusaur',
     types: [TYPES.GRASS, TYPES.POISON],
     baseStats: { hp: 80, attack: 82, defense: 83, specialAttack: 100, specialDefense: 100, speed: 80 },
+    generation: 1,
   },
   pikachu: {
     name: 'Pikachu',
     types: [TYPES.ELECTRIC],
     baseStats: { hp: 35, attack: 55, defense: 40, specialAttack: 50, specialDefense: 50, speed: 90 },
+    generation: 1,
   },
   gengar: {
     name: 'Gengar',
     types: [TYPES.GHOST, TYPES.POISON],
     baseStats: { hp: 60, attack: 65, defense: 60, specialAttack: 130, specialDefense: 75, speed: 110 },
+    generation: 1,
   },
   dragonite: {
     name: 'Dragonite',
     types: [TYPES.DRAGON, TYPES.FLYING],
     baseStats: { hp: 91, attack: 134, defense: 95, specialAttack: 100, specialDefense: 100, speed: 80 },
+    generation: 1,
   },
   snorlax: {
     name: 'Snorlax',
     types: [TYPES.NORMAL],
     baseStats: { hp: 160, attack: 110, defense: 65, specialAttack: 65, specialDefense: 110, speed: 30 },
+    generation: 1,
   },
   garchomp: {
     name: 'Garchomp',
     types: [TYPES.DRAGON, TYPES.GROUND],
     baseStats: { hp: 108, attack: 130, defense: 95, specialAttack: 80, specialDefense: 85, speed: 102 },
+    generation: 4,
   },
   lucario: {
     name: 'Lucario',
     types: [TYPES.FIGHTING, TYPES.STEEL],
     baseStats: { hp: 70, attack: 110, defense: 70, specialAttack: 115, specialDefense: 70, speed: 90 },
+    generation: 4,
   },
   togekiss: {
     name: 'Togekiss',
     types: [TYPES.FAIRY, TYPES.FLYING],
     baseStats: { hp: 85, attack: 50, defense: 95, specialAttack: 120, specialDefense: 115, speed: 80 },
+    generation: 4,
   },
 };
 
@@ -76,6 +87,7 @@ function buildPokemon(speciesId, config = {}) {
     nature: config.nature || 'hardy',
     evs: config.evs || {},
     ivs: config.ivs || {},
+    generation: species.generation,
   });
 }
 
@@ -145,4 +157,29 @@ function listAvailablePokemon() {
   return Object.keys(POKEDEX);
 }
 
-module.exports = { POKEDEX, buildPokemon, buildTeam, validateTeam, getPokedexEntry, listAvailablePokemon };
+function listPokemonByGeneration(genNumber) {
+  if (!isGenerationValid(genNumber)) return [];
+  return Object.entries(POKEDEX)
+    .filter(([, entry]) => entry.generation === genNumber)
+    .map(([id]) => id);
+}
+
+function filterPokedexByGeneration(genNumber) {
+  if (!isGenerationValid(genNumber)) return {};
+  const filtered = {};
+  for (const [id, entry] of Object.entries(POKEDEX)) {
+    if (entry.generation === genNumber) {
+      filtered[id] = entry;
+    }
+  }
+  return filtered;
+}
+
+function listPokemonUpToGeneration(maxGen) {
+  if (!isGenerationValid(maxGen)) return [];
+  return Object.entries(POKEDEX)
+    .filter(([, entry]) => entry.generation <= maxGen)
+    .map(([id]) => id);
+}
+
+module.exports = { POKEDEX, buildPokemon, buildTeam, validateTeam, getPokedexEntry, listAvailablePokemon, listPokemonByGeneration, filterPokedexByGeneration, listPokemonUpToGeneration };
