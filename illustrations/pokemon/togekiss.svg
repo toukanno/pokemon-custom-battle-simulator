@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <radialGradient id="togekiss-bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFB7C5" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#FFB7C5" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="togekiss-body" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#F0F0F0"/>
+    </linearGradient>
+    <linearGradient id="togekiss-wing" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#E8E8E8"/>
+    </linearGradient>
+    <linearGradient id="togekiss-red" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#E06060"/>
+      <stop offset="100%" stop-color="#CC4040"/>
+    </linearGradient>
+    <linearGradient id="togekiss-blue" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#6090CC"/>
+      <stop offset="100%" stop-color="#4070AA"/>
+    </linearGradient>
+    <filter id="fairy-glow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <circle cx="200" cy="200" r="180" fill="url(#togekiss-bg)"/>
+  <!-- Sparkle effects -->
+  <g filter="url(#fairy-glow)" opacity="0.4">
+    <path d="M90 110 L95 100 L100 110 L95 120Z" fill="#FFD700"/>
+    <path d="M310 130 L315 120 L320 130 L315 140Z" fill="#FFD700"/>
+    <path d="M130 300 L135 290 L140 300 L135 310Z" fill="#FFD700"/>
+    <path d="M280 290 L285 280 L290 290 L285 300Z" fill="#FFD700"/>
+    <path d="M200 80 L203 72 L206 80 L203 88Z" fill="#FFD700"/>
+  </g>
+  <!-- Left wing (large, spread) -->
+  <path d="M160 200 Q100 170 50 150 Q60 158 55 145 Q45 135 65 148 Q40 120 60 140 Q50 110 70 135 Q65 105 85 135 Q90 115 95 140 Q105 125 108 150 Q120 140 125 160 Q140 155 145 175 Q155 168 158 190Z" fill="url(#togekiss-wing)" stroke="#CCC" stroke-width="1.5"/>
+  <!-- Right wing -->
+  <path d="M240 200 Q300 170 350 150 Q340 158 345 145 Q355 135 335 148 Q360 120 340 140 Q350 110 330 135 Q335 105 315 135 Q310 115 305 140 Q295 125 292 150 Q280 140 275 160 Q260 155 255 175 Q245 168 242 190Z" fill="url(#togekiss-wing)" stroke="#CCC" stroke-width="1.5"/>
+  <!-- Body (round, egg-like) -->
+  <ellipse cx="200" cy="230" rx="60" ry="65" fill="url(#togekiss-body)" stroke="#CCC" stroke-width="2"/>
+  <!-- Triangle markings on body -->
+  <path d="M170 245 L180 230 L190 245Z" fill="url(#togekiss-red)"/>
+  <path d="M195 265 L205 248 L215 265Z" fill="url(#togekiss-blue)"/>
+  <path d="M215 240 L225 225 L235 240Z" fill="url(#togekiss-red)"/>
+  <path d="M175 275 L185 260 L195 275Z" fill="url(#togekiss-blue)"/>
+  <path d="M210 278 L220 263 L230 278Z" fill="url(#togekiss-red)"/>
+  <!-- Head (top of body) -->
+  <ellipse cx="200" cy="175" rx="38" ry="32" fill="url(#togekiss-body)" stroke="#CCC" stroke-width="1.5"/>
+  <!-- Head crest -->
+  <path d="M185 150 Q180 120 170 100 Q178 110 185 125 Q183 108 180 90 Q190 110 192 130 Q192 112 195 95 Q198 115 197 140Z" fill="url(#togekiss-red)" stroke="#B03030" stroke-width="1"/>
+  <path d="M205 150 Q208 120 215 100 Q212 110 208 125 Q210 108 215 90 Q207 110 206 130 Q208 112 210 95 Q205 115 204 140Z" fill="url(#togekiss-blue)" stroke="#3060A0" stroke-width="1"/>
+  <!-- Eyes (gentle, kind) -->
+  <ellipse cx="186" cy="172" rx="9" ry="10" fill="white" stroke="#AAA" stroke-width="0.5"/>
+  <ellipse cx="214" cy="172" rx="9" ry="10" fill="white" stroke="#AAA" stroke-width="0.5"/>
+  <ellipse cx="188" cy="173" rx="5" ry="7" fill="#333"/>
+  <ellipse cx="216" cy="173" rx="5" ry="7" fill="#333"/>
+  <ellipse cx="190" cy="170" rx="2.5" ry="3" fill="white"/>
+  <ellipse cx="218" cy="170" rx="2.5" ry="3" fill="white"/>
+  <!-- Small beak -->
+  <path d="M196 183 L200 190 L204 183" fill="#D4A030" stroke="#B08020" stroke-width="1"/>
+  <!-- Happy expression (slight smile lines) -->
+  <path d="M192 188 Q200 192 208 188" fill="none" stroke="#CCC" stroke-width="1" opacity="0.5"/>
+  <!-- Feet (small, tucked) -->
+  <ellipse cx="185" cy="292" rx="12" ry="6" fill="#D4A030" stroke="#B08020" stroke-width="1"/>
+  <ellipse cx="215" cy="292" rx="12" ry="6" fill="#D4A030" stroke="#B08020" stroke-width="1"/>
+  <!-- Name label -->
+  <text x="200" y="390" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#CC6688">TOGEKISS</text>
+  <text x="200" y="22" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#FFB7C5">Fairy / Flying</text>
+</svg>

@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <radialGradient id="charizard-bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FF6B35" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#FF6B35" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="charizard-body" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E8730C"/>
+      <stop offset="100%" stop-color="#C45A08"/>
+    </linearGradient>
+    <linearGradient id="charizard-belly" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F5D78E"/>
+      <stop offset="100%" stop-color="#E8B84B"/>
+    </linearGradient>
+    <linearGradient id="flame-gradient" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#FF4500"/>
+      <stop offset="40%" stop-color="#FF8C00"/>
+      <stop offset="100%" stop-color="#FFD700"/>
+    </linearGradient>
+    <filter id="fire-glow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <!-- Background glow -->
+  <circle cx="200" cy="200" r="180" fill="url(#charizard-bg)"/>
+  <!-- Tail flame -->
+  <g filter="url(#fire-glow)">
+    <path d="M120 310 Q100 280 95 260 Q85 230 100 210 Q90 240 105 250 Q95 220 110 200 Q105 235 115 245 Q110 220 125 210 Q118 240 125 260 Q130 280 125 300Z" fill="url(#flame-gradient)"/>
+  </g>
+  <!-- Tail -->
+  <path d="M175 280 Q155 290 135 300 Q120 310 125 300 Q130 285 140 275 Q155 265 170 270Z" fill="url(#charizard-body)" stroke="#A04808" stroke-width="1.5"/>
+  <!-- Left wing -->
+  <path d="M155 160 Q120 110 90 80 Q110 75 130 90 Q120 65 105 45 Q130 55 145 75 Q140 50 135 30 Q155 55 158 80 Q160 60 165 40 Q170 65 168 90 Q175 70 185 55 Q180 80 175 100 Q180 120 175 140Z" fill="#1E90AA" stroke="#166E85" stroke-width="1.5"/>
+  <!-- Right wing -->
+  <path d="M245 160 Q280 110 310 80 Q290 75 270 90 Q280 65 295 45 Q270 55 255 75 Q260 50 265 30 Q245 55 242 80 Q240 60 235 40 Q230 65 232 90 Q225 70 215 55 Q220 80 225 100 Q220 120 225 140Z" fill="#1E90AA" stroke="#166E85" stroke-width="1.5"/>
+  <!-- Body -->
+  <ellipse cx="200" cy="250" rx="65" ry="80" fill="url(#charizard-body)" stroke="#A04808" stroke-width="2"/>
+  <!-- Belly -->
+  <ellipse cx="200" cy="265" rx="40" ry="50" fill="url(#charizard-belly)"/>
+  <!-- Left arm -->
+  <path d="M140 220 Q120 230 110 245 Q105 255 115 255 Q120 250 125 248" fill="url(#charizard-body)" stroke="#A04808" stroke-width="2"/>
+  <!-- Right arm -->
+  <path d="M260 220 Q280 230 290 245 Q295 255 285 255 Q280 250 275 248" fill="url(#charizard-body)" stroke="#A04808" stroke-width="2"/>
+  <!-- Left leg -->
+  <path d="M170 320 Q165 340 155 355 Q150 360 160 360 Q165 358 170 355 Q175 360 180 360 Q185 358 175 350 Q180 340 180 325Z" fill="url(#charizard-body)" stroke="#A04808" stroke-width="1.5"/>
+  <!-- Right leg -->
+  <path d="M230 320 Q235 340 245 355 Q250 360 240 360 Q235 358 230 355 Q225 360 220 360 Q215 358 225 350 Q220 340 220 325Z" fill="url(#charizard-body)" stroke="#A04808" stroke-width="1.5"/>
+  <!-- Neck -->
+  <path d="M175 190 Q185 170 200 160 Q215 170 225 190" fill="url(#charizard-body)" stroke="#A04808" stroke-width="1.5"/>
+  <!-- Head -->
+  <ellipse cx="200" cy="145" rx="40" ry="35" fill="url(#charizard-body)" stroke="#A04808" stroke-width="2"/>
+  <!-- Snout -->
+  <ellipse cx="200" cy="160" rx="25" ry="15" fill="#D06A08"/>
+  <!-- Horn left -->
+  <path d="M170 120 Q160 100 165 85 Q170 95 175 115Z" fill="url(#charizard-body)" stroke="#A04808" stroke-width="1.5"/>
+  <!-- Horn right -->
+  <path d="M230 120 Q240 100 235 85 Q230 95 225 115Z" fill="url(#charizard-body)" stroke="#A04808" stroke-width="1.5"/>
+  <!-- Eyes -->
+  <ellipse cx="185" cy="138" rx="8" ry="10" fill="white"/>
+  <ellipse cx="215" cy="138" rx="8" ry="10" fill="white"/>
+  <ellipse cx="187" cy="139" rx="5" ry="7" fill="#1A5276"/>
+  <ellipse cx="217" cy="139" rx="5" ry="7" fill="#1A5276"/>
+  <circle cx="189" cy="136" r="2" fill="white"/>
+  <circle cx="219" cy="136" r="2" fill="white"/>
+  <!-- Nostrils -->
+  <circle cx="193" cy="160" r="2.5" fill="#A04808"/>
+  <circle cx="207" cy="160" r="2.5" fill="#A04808"/>
+  <!-- Mouth -->
+  <path d="M188 168 Q200 175 212 168" fill="none" stroke="#A04808" stroke-width="1.5"/>
+  <!-- Name label -->
+  <text x="200" y="390" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#E8730C">CHARIZARD</text>
+  <text x="200" y="22" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#FF6B35">Fire / Flying</text>
+</svg>

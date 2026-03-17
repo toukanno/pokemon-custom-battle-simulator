@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokemon Custom Battle Simulator - Illustration Gallery</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      color: #fff;
+      min-height: 100vh;
+    }
+    header {
+      text-align: center;
+      padding: 40px 20px;
+      background: rgba(0,0,0,0.3);
+      border-bottom: 2px solid rgba(255,255,255,0.1);
+    }
+    header h1 {
+      font-size: 2.5em;
+      background: linear-gradient(90deg, #FF6B35, #FFD700, #4A90D9, #4CAF50);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 10px;
+    }
+    header p {
+      color: #aaa;
+      font-size: 1.1em;
+    }
+    .section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    .section h2 {
+      font-size: 1.8em;
+      margin-bottom: 30px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .pokemon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 25px;
+    }
+    .pokemon-card {
+      background: rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 20px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      border: 1px solid rgba(255,255,255,0.1);
+      cursor: pointer;
+    }
+    .pokemon-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      border-color: rgba(255,255,255,0.25);
+    }
+    .pokemon-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.03);
+    }
+    .pokemon-card .card-info {
+      margin-top: 15px;
+      text-align: center;
+    }
+    .pokemon-card .card-info h3 {
+      font-size: 1.3em;
+      margin-bottom: 8px;
+    }
+    .type-badges {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+    .type-badge {
+      padding: 3px 14px;
+      border-radius: 12px;
+      font-size: 0.75em;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .type-fire { background: #F08030; }
+    .type-water { background: #6890F0; }
+    .type-grass { background: #78C850; }
+    .type-electric { background: #F8D030; color: #333; }
+    .type-ghost { background: #705898; }
+    .type-poison { background: #A040A0; }
+    .type-dragon { background: #7038F8; }
+    .type-flying { background: #A890F0; }
+    .type-normal { background: #A8A878; }
+    .type-ground { background: #E0C068; color: #333; }
+    .type-fighting { background: #C03028; }
+    .type-steel { background: #B8B8D0; color: #333; }
+    .type-fairy { background: #EE99AC; }
+    .type-ice { background: #98D8D8; color: #333; }
+    .type-psychic { background: #F85888; }
+    .type-bug { background: #A8B820; }
+    .type-rock { background: #B8A038; }
+    .type-dark { background: #705848; }
+    .stat-bar-container {
+      margin-top: 10px;
+      text-align: left;
+    }
+    .stat-row {
+      display: flex;
+      align-items: center;
+      margin: 3px 0;
+      font-size: 0.7em;
+    }
+    .stat-label {
+      width: 30px;
+      font-weight: bold;
+      color: #aaa;
+    }
+    .stat-bar {
+      flex: 1;
+      height: 6px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 3px;
+      margin: 0 6px;
+      overflow: hidden;
+    }
+    .stat-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 0.5s;
+    }
+    .stat-value {
+      width: 25px;
+      text-align: right;
+      color: #aaa;
+    }
+    .scene-container {
+      background: rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 20px;
+      border: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 25px;
+    }
+    .scene-container img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+    .scene-container h3 {
+      margin-top: 15px;
+      text-align: center;
+      font-size: 1.2em;
+      color: #ccc;
+    }
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #555;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Pokemon Custom Battle Simulator</h1>
+    <p>Illustration Gallery - All 10 Playable Pokemon</p>
+  </header>
+
+  <div class="section">
+    <h2>Battle Scene</h2>
+    <div class="scene-container">
+      <img src="scenes/battle-scene.svg" alt="Pokemon Battle Scene - Charizard vs Blastoise">
+      <h3>Charizard vs Blastoise - Flamethrower!</h3>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Pokemon Roster</h2>
+    <div class="pokemon-grid">
+      <!-- Charizard -->
+      <div class="pokemon-card">
+        <img src="pokemon/charizard.svg" alt="Charizard">
+        <div class="card-info">
+          <h3>Charizard</h3>
+          <div class="type-badges">
+            <span class="type-badge type-fire">Fire</span>
+            <span class="type-badge type-flying">Flying</span>
+          </div>
+          <div class="stat-bar-container">
+            <div class="stat-row"><span class="stat-label">HP</span><div class="stat-bar"><div class="stat-bar-fill" style="width:52%;background:#4CAF50"></div></div><span class="stat-value">78</span></div>
+            <div class="stat-row"><span class="stat-label">ATK</span><div class="stat-bar"><div class="stat-bar-fill" style="width:56%;background:#F44336"></div></div><span class="stat-value">84</span></div>
+            <div class="stat-row"><span class="stat-label">DEF</span><div class="stat-bar"><div class="stat-bar-fill" style="width:52%;background:#FF9800"></div></div><span class="stat-value">78</span></div>
+            <div class="stat-row"><span class="stat-label">SPA</span><div class="stat-bar"><div class="stat-bar-fill" style="width:73%;background:#2196F3"></div></div><span class="stat-value">109</span></div>
+            <div class="stat-row"><span class="stat-label">SPD</span><div class="stat-bar"><div class="stat-bar-fill" style="width:57%;background:#9C27B0"></div></div><span class="stat-value">85</span></div>
+            <div class="stat-row"><span class="stat-label">SPE</span><div class="stat-bar"><div class="stat-bar-fill" style="width:67%;background:#E91E63"></div></div><span class="stat-value">100</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- Blastoise -->
+      <div class="pokemon-card">
+        <img src="pokemon/blastoise.svg" alt="Blastoise">
+        <div class="card-info">
+          <h3>Blastoise</h3>
+          <div class="type-badges">
+            <span class="type-badge type-water">Water</span>
+          </div>
+          <div class="stat-bar-container">
+            <div class="stat-row"><span class="stat-label">HP</span><div class="stat-bar"><div class="stat-bar-fill" style="width:53%;background:#4CAF50"></div></div><span class="stat-value">79</span></div>
+            <div class="stat-row"><span class="stat-label">ATK</span><div class="stat-bar"><div class="stat-bar-fill" style="width:55%;background:#F44336"></div></div><span class="stat-value">83</span></div>
+            <div class="stat-row"><span class="stat-label">DEF</span><div class="stat-bar"><div class="stat-bar-fill" style="width:67%;background:#FF9800"></div></div><span class="stat-value">100</span></div>
+            <div class="stat-row"><span class="stat-label">SPA</span><div class="stat-bar"><div class="stat-bar-fill" style="width:57%;background:#2196F3"></div></div><span class="stat-value">85</span></div>
+            <div class="stat-row"><span class="stat-label">SPD</span><div class="stat-bar"><div class="stat-bar-fill" style="width:70%;background:#9C27B0"></div></div><span class="stat-value">105</span></div>
+            <div class="stat-row"><span class="stat-label">SPE</span><div class="stat-bar"><div class="stat-bar-fill" style="width:52%;background:#E91E63"></div></div><span class="stat-value">78</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- Venusaur -->
+      <div class="pokemon-card">
+        <img src="pokemon/venusaur.svg" alt="Venusaur">
+        <div class="card-info">
+          <h3>Venusaur</h3>
+          <div class="type-badges">
+            <span class="type-badge type-grass">Grass</span>
+            <span class="type-badge type-poison">Poison</span>
+          </div>
+          <div class="stat-bar-container">
+            <div class="stat-row"><span class="stat-label">HP</span><div class="stat-bar"><div class="stat-bar-fill" style="width:53%;background:#4CAF50"></div></div><span class="stat-value">80</span></div>
+            <div class="stat-row"><span class="stat-label">ATK</span><div class="stat-bar"><div class="stat-bar-fill" style="width:55%;background:#F44336"></div></div><span class="stat-value">82</span></div>
+            <div class="stat-row"><span class="stat-label">DEF</span><div class="stat-bar"><div class="stat-bar-fill" style="width:55%;background:#FF9800"></div></div><span class="stat-value">83</span></div>
+            <div class="stat-row"><span class="stat-label">SPA</span><div class="stat-bar"><div class="stat-bar-fill" style="width:67%;background:#2196F3"></div></div><span class="stat-value">100</span></div>
+            <div class="stat-row"><span class="stat-label">SPD</span><div class="stat-bar"><div class="stat-bar-fill" style="width:67%;background:#9C27B0"></div></div><span class="stat-value">100</span></div>
+            <div class="stat-row"><span class="stat-label">SPE</span><div class="stat-bar"><div class="stat-bar-fill" style="width:53%;background:#E91E63"></div></div><span class="stat-value">80</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- Pikachu -->
+      <div class="pokemon-card">
+        <img src="pokemon/pikachu.svg" alt="Pikachu">
+        <div class="card-info">
+          <h3>Pikachu</h3>
+          <div class="type-badges">
+            <span class="type-badge type-electric">Electric</span>
+          </div>
+          <div class="stat-bar-container">
+            <div class="stat-row"><span class="stat-label">HP</span><div class="stat-bar"><div class="stat-bar-fill" style="width:23%;background:#4CAF50"></div></div><span class="stat-value">35</span></div>
+            <div class="stat-row"><span class="stat-label">ATK</span><div class="stat-bar"><div class="stat-bar-fill" style="width:37%;background:#F44336"></div></div><span class="stat-value">55</span></div>
+            <div class="stat-row"><span class="stat-label">DEF</span><div class="stat-bar"><div class="stat-bar-fill" style="width:27%;background:#FF9800"></div></div><span class="stat-value">40</span></div>
+            <div class="stat-row"><span class="stat-label">SPA</span><div class="stat-bar"><div class="stat-bar-fill" style="width:33%;background:#2196F3"></div></div><span class="stat-value">50</span></div>
+            <div class="stat-row"><span class="stat-label">SPD</span><div class="stat-bar"><div class="stat-bar-fill" style="width:33%;background:#9C27B0"></div></div><span class="stat-value">50</span></div>
+            <div class="stat-row"><span class="stat-label">SPE</span><div class="stat-bar"><div class="stat-bar-fill" style="width:60%;background:#E91E63"></div></div><span class="stat-value">90</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- Gengar -->
+      <div class="pokemon-card">
+        <img src="pokemon/gengar.svg" alt="Gengar">
+        <div class="card-info">
+          <h3>Gengar</h3>
+          <div class="type-badges">
+            <span class="type-badge type-ghost">Ghost</span>
+            <span class="type-badge type-poison">Poison</span>
+          </div>
+          <div class="stat-bar-container">
+            <div class="stat-row"><span class="stat-label">HP</span><div class="stat-bar"><div class="stat-bar-fill" style="width:40%;background:#4CAF50"></div></div><span class="stat-value">60</span></div>
+            <div class="stat-row"><span class="stat-label">ATK</span><div class="stat-bar"><div class="stat-bar-fill" style="width:43%;background:#F44336"></div></div><span class="stat-value">65</span></div>
+            <div class="stat-row"><span class="stat-label">DEF</span><div class="stat-bar"><div class="stat-bar-fill" style="width:40%;background:#FF9800"></div></div><span class="stat-value">60</span></div>
+            <div class="stat-row"><span class="stat-label">SPA</span><div class="stat-bar"><div class="stat-bar-fill" style="width:87%;background:#2196F3"></div></div><span class="stat-value">130</span></div>
+            <div class="stat-row"><span class="stat-label">SPD</span><div class="stat-bar"><div class="stat-bar-fill" style="width:50%;background:#9C27B0"></div></div><span class="stat-value">75</span></div>
+            <div class="stat-row"><span class="stat-label">SPE</span><div class="stat-bar"><div class="stat-bar-fill" style="width:73%;background:#E91E63"></div></div><span class="stat-value">110</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- Dragonite -->
+      <div class="pokemon-card">
+        <img src="pokemon/dragonite.svg" alt="Dragonite">
+        <div class="card-info">
+          <h3>Dragonite</h3>
+          <div class="type-badges">
+            <span class="type-badge type-dragon">Dragon</span>
+            <span class="type-badge type-flying">Flying</span>
+          </div>
+          <div class="stat-bar-container">
+            <div class="stat-row"><span class="stat-label">HP</span><div class="stat-bar"><div class="stat-bar-fill" style="width:61%;background:#4CAF50"></div></div><span class="stat-value">91</span></div>
+            <div class="stat-row"><span class="stat-label">ATK</span><div class="stat-bar"><div class="stat-bar-fill" style="width:89%;background:#F44336"></div></div><span class="stat-value">134</span></div>
+            <div class="stat-row"><span class="stat-label">DEF</span><div class="stat-bar"><div class="stat-bar-fill" style="width:63%;background:#FF9800"></div></div><span class="stat-value">95</span></div>
+            <div class="stat-row"><span class="stat-label">SPA</span><div class="stat-bar"><div class="stat-bar-fill" style="width:67%;background:#2196F3"></div></div><span class="stat-value">100</span></div>
+            <div class="stat-row"><span class="stat-label">SPD</span><div class="stat-bar"><div class="stat-bar-fill" style="width:67%;background:#9C27B0"></div></div><span class="stat-value">100</span></div>
+            <div class="stat-row"><span class="stat-label">SPE</span><div class="stat-bar"><div class="stat-bar-fill" style="width:53%;background:#E91E63"></div></div><span class="stat-value">80</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- Snorlax -->
+      <div class="pokemon-card">
+        <img src="pokemon/snorlax.svg" alt="Snorlax">
+        <div class="card-info">
+          <h3>Snorlax</h3>
+          <div class="type-badges">
+            <span class="type-badge type-normal">Normal</span>
+          </div>
+          <div class="stat-bar-container">
+            <div class="stat-row"><span class="stat-label">HP</span><div class="stat-bar"><div class="stat-bar-fill" style="width:100%;background:#4CAF50"></div></div><span class="stat-value">160</span></div>
+            <div class="stat-row"><span class="stat-label">ATK</span><div class="stat-bar"><div class="stat-bar-fill" style="width:73%;background:#F44336"></div></div><span class="stat-value">110</span></div>
+            <div class="stat-row"><span class="stat-label">DEF</span><div class="stat-bar"><div class="stat-bar-fill" style="width:43%;background:#FF9800"></div></div><span class="stat-value">65</span></div>
+            <div class="stat-row"><span class="stat-label">SPA</span><div class="stat-bar"><div class="stat-bar-fill" style="width:43%;background:#2196F3"></div></div><span class="stat-value">65</span></div>
+            <div class="stat-row"><span class="stat-label">SPD</span><div class="stat-bar"><div class="stat-bar-fill" style="width:73%;background:#9C27B0"></div></div><span class="stat-value">110</span></div>
+            <div class="stat-row"><span class="stat-label">SPE</span><div class="stat-bar"><div class="stat-bar-fill" style="width:20%;background:#E91E63"></div></div><span class="stat-value">30</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- Garchomp -->
+      <div class="pokemon-card">
+        <img src="pokemon/garchomp.svg" alt="Garchomp">
+        <div class="card-info">
+          <h3>Garchomp</h3>
+          <div class="type-badges">
+            <span class="type-badge type-dragon">Dragon</span>
+            <span class="type-badge type-ground">Ground</span>
+          </div>
+          <div class="stat-bar-container">
+            <div class="stat-row"><span class="stat-label">HP</span><div class="stat-bar"><div class="stat-bar-fill" style="width:72%;background:#4CAF50"></div></div><span class="stat-value">108</span></div>
+            <div class="stat-row"><span class="stat-label">ATK</span><div class="stat-bar"><div class="stat-bar-fill" style="width:87%;background:#F44336"></div></div><span class="stat-value">130</span></div>
+            <div class="stat-row"><span class="stat-label">DEF</span><div class="stat-bar"><div class="stat-bar-fill" style="width:63%;background:#FF9800"></div></div><span class="stat-value">95</span></div>
+            <div class="stat-row"><span class="stat-label">SPA</span><div class="stat-bar"><div class="stat-bar-fill" style="width:53%;background:#2196F3"></div></div><span class="stat-value">80</span></div>
+            <div class="stat-row"><span class="stat-label">SPD</span><div class="stat-bar"><div class="stat-bar-fill" style="width:57%;background:#9C27B0"></div></div><span class="stat-value">85</span></div>
+            <div class="stat-row"><span class="stat-label">SPE</span><div class="stat-bar"><div class="stat-bar-fill" style="width:68%;background:#E91E63"></div></div><span class="stat-value">102</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- Lucario -->
+      <div class="pokemon-card">
+        <img src="pokemon/lucario.svg" alt="Lucario">
+        <div class="card-info">
+          <h3>Lucario</h3>
+          <div class="type-badges">
+            <span class="type-badge type-fighting">Fighting</span>
+            <span class="type-badge type-steel">Steel</span>
+          </div>
+          <div class="stat-bar-container">
+            <div class="stat-row"><span class="stat-label">HP</span><div class="stat-bar"><div class="stat-bar-fill" style="width:47%;background:#4CAF50"></div></div><span class="stat-value">70</span></div>
+            <div class="stat-row"><span class="stat-label">ATK</span><div class="stat-bar"><div class="stat-bar-fill" style="width:73%;background:#F44336"></div></div><span class="stat-value">110</span></div>
+            <div class="stat-row"><span class="stat-label">DEF</span><div class="stat-bar"><div class="stat-bar-fill" style="width:47%;background:#FF9800"></div></div><span class="stat-value">70</span></div>
+            <div class="stat-row"><span class="stat-label">SPA</span><div class="stat-bar"><div class="stat-bar-fill" style="width:77%;background:#2196F3"></div></div><span class="stat-value">115</span></div>
+            <div class="stat-row"><span class="stat-label">SPD</span><div class="stat-bar"><div class="stat-bar-fill" style="width:47%;background:#9C27B0"></div></div><span class="stat-value">70</span></div>
+            <div class="stat-row"><span class="stat-label">SPE</span><div class="stat-bar"><div class="stat-bar-fill" style="width:60%;background:#E91E63"></div></div><span class="stat-value">90</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- Togekiss -->
+      <div class="pokemon-card">
+        <img src="pokemon/togekiss.svg" alt="Togekiss">
+        <div class="card-info">
+          <h3>Togekiss</h3>
+          <div class="type-badges">
+            <span class="type-badge type-fairy">Fairy</span>
+            <span class="type-badge type-flying">Flying</span>
+          </div>
+          <div class="stat-bar-container">
+            <div class="stat-row"><span class="stat-label">HP</span><div class="stat-bar"><div class="stat-bar-fill" style="width:57%;background:#4CAF50"></div></div><span class="stat-value">85</span></div>
+            <div class="stat-row"><span class="stat-label">ATK</span><div class="stat-bar"><div class="stat-bar-fill" style="width:33%;background:#F44336"></div></div><span class="stat-value">50</span></div>
+            <div class="stat-row"><span class="stat-label">DEF</span><div class="stat-bar"><div class="stat-bar-fill" style="width:63%;background:#FF9800"></div></div><span class="stat-value">95</span></div>
+            <div class="stat-row"><span class="stat-label">SPA</span><div class="stat-bar"><div class="stat-bar-fill" style="width:80%;background:#2196F3"></div></div><span class="stat-value">120</span></div>
+            <div class="stat-row"><span class="stat-label">SPD</span><div class="stat-bar"><div class="stat-bar-fill" style="width:77%;background:#9C27B0"></div></div><span class="stat-value">115</span></div>
+            <div class="stat-row"><span class="stat-label">SPE</span><div class="stat-bar"><div class="stat-bar-fill" style="width:53%;background:#E91E63"></div></div><span class="stat-value">80</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Type Chart</h2>
+    <div class="scene-container">
+      <img src="types/type-badges.svg" alt="Pokemon Type Badges and Effectiveness Chart">
+    </div>
+  </div>
+
+  <footer>
+    <p>Pokemon Custom Battle Simulator - Illustration Gallery</p>
+  </footer>
+</body>
+</html>

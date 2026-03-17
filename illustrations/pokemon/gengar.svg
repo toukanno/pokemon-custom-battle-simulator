@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <radialGradient id="gengar-bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#7B68AE" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#4A3D73" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="gengar-body" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7B68AE"/>
+      <stop offset="100%" stop-color="#5B4D8C"/>
+    </linearGradient>
+    <linearGradient id="gengar-dark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5B4D8C"/>
+      <stop offset="100%" stop-color="#3D3366"/>
+    </linearGradient>
+    <filter id="ghost-glow">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow-filter">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+  </defs>
+  <circle cx="200" cy="200" r="180" fill="url(#gengar-bg)"/>
+  <!-- Shadow on ground -->
+  <ellipse cx="200" cy="350" rx="100" ry="15" fill="#2A1F4E" opacity="0.4" filter="url(#shadow-filter)"/>
+  <!-- Ghostly wisps -->
+  <g opacity="0.2">
+    <path d="M100 300 Q90 280 95 260 Q85 240 90 220" fill="none" stroke="#9B8EC4" stroke-width="3"/>
+    <path d="M300 300 Q310 280 305 260 Q315 240 310 220" fill="none" stroke="#9B8EC4" stroke-width="3"/>
+  </g>
+  <!-- Body (round, ghostly shape) -->
+  <path d="M100 250 Q80 200 100 160 Q120 120 160 110 Q200 100 240 110 Q280 120 300 160 Q320 200 300 250 Q290 290 280 310 Q270 330 265 310 Q260 330 250 310 Q240 335 230 310 Q220 335 210 310 Q200 340 190 310 Q180 335 170 310 Q160 330 150 310 Q140 330 130 310 Q120 290 100 250Z" fill="url(#gengar-body)" stroke="#4A3D73" stroke-width="2"/>
+  <!-- Darker inner area -->
+  <ellipse cx="200" cy="220" rx="60" ry="50" fill="url(#gengar-dark)" opacity="0.4"/>
+  <!-- Spiky ears -->
+  <path d="M130 140 Q110 90 120 55 Q135 80 145 120Z" fill="url(#gengar-body)" stroke="#4A3D73" stroke-width="2"/>
+  <path d="M270 140 Q290 90 280 55 Q265 80 255 120Z" fill="url(#gengar-body)" stroke="#4A3D73" stroke-width="2"/>
+  <!-- Eyes -->
+  <g filter="url(#ghost-glow)">
+    <ellipse cx="165" cy="180" rx="25" ry="22" fill="white"/>
+    <ellipse cx="235" cy="180" rx="25" ry="22" fill="white"/>
+    <ellipse cx="172" cy="182" rx="14" ry="16" fill="#CC0000"/>
+    <ellipse cx="242" cy="182" rx="14" ry="16" fill="#CC0000"/>
+    <circle cx="176" cy="177" r="4" fill="#FF4444"/>
+    <circle cx="246" cy="177" r="4" fill="#FF4444"/>
+  </g>
+  <!-- Menacing grin -->
+  <path d="M145 225 Q155 215 170 220 Q185 228 200 220 Q215 228 230 220 Q245 215 255 225" fill="none" stroke="#3D3366" stroke-width="3"/>
+  <!-- Teeth -->
+  <path d="M152 222 L160 235 L168 222" fill="white" stroke="#3D3366" stroke-width="1"/>
+  <path d="M178 225 L185 238 L192 225" fill="white" stroke="#3D3366" stroke-width="1"/>
+  <path d="M208 225 L215 238 L222 225" fill="white" stroke="#3D3366" stroke-width="1"/>
+  <path d="M232 222 L240 235 L248 222" fill="white" stroke="#3D3366" stroke-width="1"/>
+  <!-- Hands/claws -->
+  <path d="M105 200 Q80 190 65 195 Q58 198 55 190 Q50 185 58 182 Q65 180 60 172 Q58 165 68 168 Q75 172 85 175 Q95 180 105 190Z" fill="url(#gengar-dark)" stroke="#3D3366" stroke-width="1.5"/>
+  <path d="M295 200 Q320 190 335 195 Q342 198 345 190 Q350 185 342 182 Q335 180 340 172 Q342 165 332 168 Q325 172 315 175 Q305 180 295 190Z" fill="url(#gengar-dark)" stroke="#3D3366" stroke-width="1.5"/>
+  <!-- Name label -->
+  <text x="200" y="390" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#7B68AE">GENGAR</text>
+  <text x="200" y="22" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#9B8EC4">Ghost / Poison</text>
+</svg>

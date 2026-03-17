@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <radialGradient id="lucario-bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#5C94C8" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#5C94C8" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="lucario-blue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5C94C8"/>
+      <stop offset="100%" stop-color="#3D6A98"/>
+    </linearGradient>
+    <linearGradient id="lucario-black" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#333"/>
+      <stop offset="100%" stop-color="#1A1A1A"/>
+    </linearGradient>
+    <linearGradient id="lucario-cream" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F5E6C8"/>
+      <stop offset="100%" stop-color="#E0D0A8"/>
+    </linearGradient>
+    <filter id="aura-glow">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <circle cx="200" cy="200" r="180" fill="url(#lucario-bg)"/>
+  <!-- Aura effect -->
+  <g filter="url(#aura-glow)" opacity="0.2">
+    <circle cx="200" cy="200" r="120" fill="none" stroke="#5C94C8" stroke-width="3"/>
+    <circle cx="200" cy="200" r="140" fill="none" stroke="#5C94C8" stroke-width="2"/>
+  </g>
+  <!-- Tail -->
+  <path d="M215 310 Q230 320 240 315 Q250 310 245 300 Q238 305 228 308 Q220 305 215 302Z" fill="url(#lucario-blue)" stroke="#2D5070" stroke-width="1.5"/>
+  <!-- Body -->
+  <ellipse cx="200" cy="260" rx="45" ry="60" fill="url(#lucario-blue)" stroke="#2D5070" stroke-width="2"/>
+  <!-- Chest area -->
+  <ellipse cx="200" cy="245" rx="30" ry="35" fill="url(#lucario-cream)"/>
+  <!-- Chest spike -->
+  <path d="M200 215 L192 235 L200 230 L208 235Z" fill="#D4C09A" stroke="#B0A070" stroke-width="1"/>
+  <!-- Left leg -->
+  <path d="M170 305 Q165 325 160 340 Q155 350 165 352 Q172 348 175 342 Q178 350 185 352 Q188 346 178 338 Q180 325 182 308Z" fill="url(#lucario-blue)" stroke="#2D5070" stroke-width="1.5"/>
+  <!-- Right leg -->
+  <path d="M230 305 Q235 325 240 340 Q245 350 235 352 Q228 348 225 342 Q222 350 215 352 Q212 346 222 338 Q220 325 218 308Z" fill="url(#lucario-blue)" stroke="#2D5070" stroke-width="1.5"/>
+  <!-- Left arm -->
+  <path d="M158 235 Q140 240 130 250 Q125 258 132 260 Q138 255 142 248Z" fill="url(#lucario-blue)" stroke="#2D5070" stroke-width="1.5"/>
+  <!-- Left hand spike -->
+  <path d="M128 255 Q120 248 115 238 Q118 245 125 252Z" fill="#B0B0B0" stroke="#808080" stroke-width="1"/>
+  <!-- Right arm -->
+  <path d="M242 235 Q260 240 270 250 Q275 258 268 260 Q262 255 258 248Z" fill="url(#lucario-blue)" stroke="#2D5070" stroke-width="1.5"/>
+  <!-- Right hand spike -->
+  <path d="M272 255 Q280 248 285 238 Q282 245 275 252Z" fill="#B0B0B0" stroke="#808080" stroke-width="1"/>
+  <!-- Neck -->
+  <path d="M180 200 Q190 185 200 182 Q210 185 220 200" fill="url(#lucario-blue)" stroke="#2D5070" stroke-width="1.5"/>
+  <!-- Head -->
+  <ellipse cx="200" cy="158" rx="35" ry="35" fill="url(#lucario-blue)" stroke="#2D5070" stroke-width="2"/>
+  <!-- Black mask -->
+  <path d="M168 148 Q180 138 200 135 Q220 138 232 148 Q228 158 200 162 Q172 158 168 148Z" fill="url(#lucario-black)"/>
+  <!-- Snout -->
+  <path d="M185 160 Q200 155 215 160 Q210 172 200 175 Q190 172 185 160Z" fill="url(#lucario-blue)" stroke="#2D5070" stroke-width="1.5"/>
+  <!-- Ears -->
+  <path d="M172 130 Q162 100 155 75 Q160 80 168 95 Q165 78 162 60 Q172 80 175 105 Q178 120 175 130Z" fill="url(#lucario-black)" stroke="#1A1A1A" stroke-width="1.5"/>
+  <path d="M228 130 Q238 100 245 75 Q240 80 232 95 Q235 78 238 60 Q228 80 225 105 Q222 120 225 130Z" fill="url(#lucario-black)" stroke="#1A1A1A" stroke-width="1.5"/>
+  <!-- Aura sensors (back of head) -->
+  <path d="M165 148 Q140 155 120 165 Q125 158 135 152 Q145 148 160 146Z" fill="url(#lucario-black)" stroke="#1A1A1A" stroke-width="1"/>
+  <path d="M163 155 Q138 165 115 178 Q122 170 135 162 Q148 155 160 152Z" fill="url(#lucario-black)" stroke="#1A1A1A" stroke-width="1"/>
+  <path d="M235 148 Q260 155 280 165 Q275 158 265 152 Q255 148 240 146Z" fill="url(#lucario-black)" stroke="#1A1A1A" stroke-width="1"/>
+  <path d="M237 155 Q262 165 285 178 Q278 170 265 162 Q252 155 240 152Z" fill="url(#lucario-black)" stroke="#1A1A1A" stroke-width="1"/>
+  <!-- Eyes (red, determined) -->
+  <ellipse cx="185" cy="148" rx="8" ry="8" fill="#CC0000"/>
+  <ellipse cx="215" cy="148" rx="8" ry="8" fill="#CC0000"/>
+  <ellipse cx="187" cy="147" rx="4" ry="5" fill="#111"/>
+  <ellipse cx="217" cy="147" rx="4" ry="5" fill="#111"/>
+  <circle cx="189" cy="145" r="2" fill="#FF6666"/>
+  <circle cx="219" cy="145" r="2" fill="#FF6666"/>
+  <!-- Nose -->
+  <ellipse cx="200" cy="167" rx="4" ry="2.5" fill="#333"/>
+  <!-- Mouth -->
+  <path d="M192 172 Q200 175 208 172" fill="none" stroke="#2D5070" stroke-width="1.5"/>
+  <!-- Name label -->
+  <text x="200" y="390" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#3D6A98">LUCARIO</text>
+  <text x="200" y="22" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#5C94C8">Fighting / Steel</text>
+</svg>

@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <radialGradient id="garchomp-bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#4A6FA5" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#4A6FA5" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="garchomp-body" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4A6FA5"/>
+      <stop offset="100%" stop-color="#344E78"/>
+    </linearGradient>
+    <linearGradient id="garchomp-belly" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#C4A870"/>
+      <stop offset="100%" stop-color="#A88D55"/>
+    </linearGradient>
+    <linearGradient id="garchomp-fin" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#344E78"/>
+      <stop offset="100%" stop-color="#233554"/>
+    </linearGradient>
+    <linearGradient id="garchomp-red" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#CC3333"/>
+      <stop offset="100%" stop-color="#991A1A"/>
+    </linearGradient>
+  </defs>
+  <circle cx="200" cy="200" r="180" fill="url(#garchomp-bg)"/>
+  <!-- Tail -->
+  <path d="M220 310 Q250 340 280 350 Q300 355 310 345 Q300 340 285 332 Q260 320 240 305Z" fill="url(#garchomp-body)" stroke="#233554" stroke-width="2"/>
+  <!-- Tail fin -->
+  <path d="M290 340 Q300 320 310 345 Q305 350 295 345Z" fill="url(#garchomp-fin)"/>
+  <!-- Left arm/fin blade -->
+  <path d="M130 200 Q95 195 60 180 Q50 175 48 185 Q52 195 65 198 Q45 200 35 210 Q45 215 65 210 Q55 218 50 228 Q62 225 80 215 Q100 205 130 210Z" fill="url(#garchomp-fin)" stroke="#1A2A44" stroke-width="1.5"/>
+  <!-- Right arm/fin blade -->
+  <path d="M270 200 Q305 195 340 180 Q350 175 352 185 Q348 195 335 198 Q355 200 365 210 Q355 215 335 210 Q345 218 350 228 Q338 225 320 215 Q300 205 270 210Z" fill="url(#garchomp-fin)" stroke="#1A2A44" stroke-width="1.5"/>
+  <!-- Body -->
+  <ellipse cx="200" cy="250" rx="55" ry="75" fill="url(#garchomp-body)" stroke="#233554" stroke-width="2"/>
+  <!-- Belly -->
+  <ellipse cx="200" cy="262" rx="32" ry="48" fill="url(#garchomp-belly)"/>
+  <!-- Chest red diamond -->
+  <path d="M200 210 L210 225 L200 240 L190 225Z" fill="url(#garchomp-red)" stroke="#801010" stroke-width="1"/>
+  <!-- Legs -->
+  <path d="M168 310 Q160 335 152 350 Q148 358 158 358 Q165 355 168 348 Q172 356 180 358 Q184 352 172 342 Q175 330 178 315Z" fill="url(#garchomp-body)" stroke="#233554" stroke-width="1.5"/>
+  <path d="M232 310 Q240 335 248 350 Q252 358 242 358 Q235 355 232 348 Q228 356 220 358 Q216 352 228 342 Q225 330 222 315Z" fill="url(#garchomp-body)" stroke="#233554" stroke-width="1.5"/>
+  <!-- Neck -->
+  <path d="M175 190 Q190 170 200 165 Q210 170 225 190" fill="url(#garchomp-body)" stroke="#233554" stroke-width="1.5"/>
+  <!-- Head -->
+  <path d="M160 150 Q170 115 200 105 Q230 115 240 150 Q235 170 200 175 Q165 170 160 150Z" fill="url(#garchomp-body)" stroke="#233554" stroke-width="2"/>
+  <!-- Head crest/horn -->
+  <path d="M190 110 Q185 85 175 60 Q188 80 195 105Z" fill="url(#garchomp-fin)" stroke="#1A2A44" stroke-width="1.5"/>
+  <path d="M210 110 Q215 85 225 60 Q212 80 205 105Z" fill="url(#garchomp-fin)" stroke="#1A2A44" stroke-width="1.5"/>
+  <!-- Side horns -->
+  <path d="M162 140 Q145 132 130 125 Q140 138 155 145Z" fill="url(#garchomp-fin)"/>
+  <path d="M238 140 Q255 132 270 125 Q260 138 245 145Z" fill="url(#garchomp-fin)"/>
+  <!-- Eyes (fierce) -->
+  <ellipse cx="180" cy="140" rx="12" ry="10" fill="#FFD700"/>
+  <ellipse cx="220" cy="140" rx="12" ry="10" fill="#FFD700"/>
+  <ellipse cx="183" cy="141" rx="5" ry="8" fill="#111"/>
+  <ellipse cx="223" cy="141" rx="5" ry="8" fill="#111"/>
+  <circle cx="181" cy="137" r="2" fill="#FFF8DC"/>
+  <circle cx="221" cy="137" r="2" fill="#FFF8DC"/>
+  <!-- Star marking under eyes -->
+  <path d="M170 148 Q175 155 168 158" fill="none" stroke="url(#garchomp-red)" stroke-width="2"/>
+  <path d="M230 148 Q225 155 232 158" fill="none" stroke="url(#garchomp-red)" stroke-width="2"/>
+  <!-- Mouth -->
+  <path d="M175 160 Q200 170 225 160" fill="none" stroke="#233554" stroke-width="2"/>
+  <!-- Name label -->
+  <text x="200" y="390" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#4A6FA5">GARCHOMP</text>
+  <text x="200" y="22" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#4A6FA5">Dragon / Ground</text>
+</svg>
