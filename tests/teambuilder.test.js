@@ -1,4 +1,15 @@
-const { buildPokemon, buildTeam, validateTeam, getPokedexEntry, listAvailablePokemon, listPokemonByGeneration, filterPokedexByGeneration, listPokemonUpToGeneration } = require('../src/teambuilder');
+const {
+  buildPokemon,
+  buildTeam,
+  validateTeam,
+  getPokedexEntry,
+  listAvailablePokemon,
+  listPokemonByGeneration,
+  filterPokedexByGeneration,
+  listPokemonUpToGeneration,
+  calculateBaseStatTotal,
+  buildStJohnsSystemTeam,
+} = require('../src/teambuilder');
 
 describe('buildPokemon', () => {
   test('builds a valid Pokemon from species ID', () => {
@@ -141,5 +152,36 @@ describe('Generation features in teambuilder', () => {
     test('returns empty array for invalid generation', () => {
       expect(listPokemonUpToGeneration(0)).toEqual([]);
     });
+  });
+});
+
+describe('calculateBaseStatTotal', () => {
+  test('sums all base stats for a species', () => {
+    const entry = getPokedexEntry('charizard');
+    expect(calculateBaseStatTotal(entry)).toBe(534);
+  });
+});
+
+describe('buildStJohnsSystemTeam', () => {
+  test('builds a full optimized team by default', () => {
+    const team = buildStJohnsSystemTeam();
+    expect(team).not.toBeNull();
+    expect(team).toHaveLength(6);
+    for (const pokemon of team) {
+      expect(pokemon.moves).toHaveLength(4);
+    }
+  });
+
+  test('supports custom team size and level', () => {
+    const team = buildStJohnsSystemTeam({ teamSize: 3, level: 100 });
+    expect(team).toHaveLength(3);
+    for (const pokemon of team) {
+      expect(pokemon.level).toBe(100);
+    }
+  });
+
+  test('returns null for invalid team size', () => {
+    expect(buildStJohnsSystemTeam({ teamSize: 0 })).toBeNull();
+    expect(buildStJohnsSystemTeam({ teamSize: 7 })).toBeNull();
   });
 });
