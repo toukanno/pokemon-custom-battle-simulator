@@ -23,6 +23,7 @@ class Battle {
     this.isOver = false;
     this.winner = null;
     this.options = options;
+    this.faintedPokemon = new Set();
   }
 
   addLog(message) {
@@ -86,6 +87,10 @@ class Battle {
   }
 
   executeAction(player, action) {
+    if (!player.active.isAlive) {
+      return;
+    }
+
     const opponent = this.getOpponent(player);
 
     if (action.type === 'switch') {
@@ -278,8 +283,9 @@ class Battle {
 
   checkFainted() {
     for (const player of [this.player1, this.player2]) {
-      if (!player.active.isAlive) {
+      if (!player.active.isAlive && !this.faintedPokemon.has(player.active)) {
         this.addLog(`${player.active.name} fainted!`);
+        this.faintedPokemon.add(player.active);
       }
     }
   }
