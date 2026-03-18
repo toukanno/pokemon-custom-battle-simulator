@@ -155,7 +155,8 @@ class BattleEngine{
   executeTurn(p1a,p2a){
     if(this.isOver)return;this.turn++;this.addLog(`--- ターン ${this.turn} ---`,'turn-header');
     const acts=this.order(p1a,p2a);
-    for(const a of acts){if(this.isOver)break;this.exec(a.player,a.action);this.checkFainted()}
+    for(const a of acts){if(this.isOver)break;this.exec(a.player,a.action);this.checkFainted();this.checkWin()}
+    if(this.isOver)return;
     this.endTurn();this.checkWin();
   }
   order(a1,a2){
