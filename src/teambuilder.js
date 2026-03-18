@@ -82,7 +82,7 @@ function buildPokemon(speciesId, config = {}) {
     name: species.name,
     types: species.types,
     baseStats: species.baseStats,
-    level: config.level || 50,
+    level: config.level ?? 50,
     moves: moves,
     nature: config.nature || 'hardy',
     evs: config.evs || {},
@@ -109,7 +109,7 @@ function buildTeam(teamConfig) {
 function validateTeam(team) {
   const errors = [];
 
-  if (!team || team.length === 0) {
+  if (!Array.isArray(team) || team.length === 0) {
     errors.push('Team must have at least 1 Pokemon');
     return { valid: false, errors };
   }
@@ -120,21 +120,26 @@ function validateTeam(team) {
   }
 
   for (const pokemon of team) {
+    if (!pokemon || typeof pokemon !== 'object') {
+      errors.push('Team contains an invalid Pokemon entry');
+      continue;
+    }
+
     // Validate EV total
-    const evTotal = Object.values(pokemon.evs).reduce((sum, v) => sum + v, 0);
+    const evTotal = Object.values(pokemon.evs || {}).reduce((sum, v) => sum + v, 0);
     if (evTotal > 510) {
       errors.push(`${pokemon.name} has too many EVs (${evTotal}/510)`);
     }
 
     // Validate individual EVs
-    for (const [stat, value] of Object.entries(pokemon.evs)) {
-      if (value > 252) {
-        errors.push(`${pokemon.name} has too many EVs in ${stat} (${value}/252)`);
+    for (const [stat, value] of Object.entries(pokemon.evs || {})) {
+      if (value < 0 || value > 252) {
+        errors.push(`${pokemon.name} has invalid EV in ${stat} (${value})`);
       }
     }
 
     // Validate IVs
-    for (const [stat, value] of Object.entries(pokemon.ivs)) {
+    for (const [stat, value] of Object.entries(pokemon.ivs || {})) {
       if (value < 0 || value > 31) {
         errors.push(`${pokemon.name} has invalid IV in ${stat} (${value})`);
       }

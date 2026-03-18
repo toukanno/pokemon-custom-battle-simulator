@@ -34,6 +34,11 @@ describe('buildPokemon', () => {
     const pokemon = buildPokemon('charizard', { moves: ['flamethrower'], level: 100 });
     expect(pokemon.level).toBe(100);
   });
+
+  test('preserves explicit invalid levels for downstream validation', () => {
+    const pokemon = buildPokemon('charizard', { moves: ['flamethrower'], level: 0 });
+    expect(pokemon.level).toBe(0);
+  });
 });
 
 describe('buildTeam', () => {
@@ -183,5 +188,35 @@ describe('buildStJohnsSystemTeam', () => {
   test('returns null for invalid team size', () => {
     expect(buildStJohnsSystemTeam({ teamSize: 0 })).toBeNull();
     expect(buildStJohnsSystemTeam({ teamSize: 7 })).toBeNull();
+  });
+});
+
+
+describe('validateTeam', () => {
+  test('rejects non-array team input', () => {
+    expect(validateTeam(null)).toEqual({
+      valid: false,
+      errors: ['Team must have at least 1 Pokemon'],
+    });
+  });
+
+  test('rejects negative EV values', () => {
+    const pokemon = buildPokemon('charizard', {
+      moves: ['flamethrower'],
+      evs: { speed: -4 },
+    });
+
+    expect(validateTeam([pokemon])).toEqual({
+      valid: false,
+      errors: ["Charizard has invalid EV in speed (-4)"],
+    });
+  });
+
+  test('rejects explicit out-of-range level values', () => {
+    const pokemon = buildPokemon('charizard', { moves: ['flamethrower'], level: 0 });
+    expect(validateTeam([pokemon])).toEqual({
+      valid: false,
+      errors: ['Charizard has invalid level (0)'],
+    });
   });
 });
