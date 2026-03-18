@@ -6,6 +6,35 @@ function createPokemon(species, moves) {
 }
 
 describe('Battle', () => {
+  test('consecutive Protect usage has reduced success chance', () => {
+    const player1 = [createPokemon('pikachu', ['protect'])];
+    const player2 = [createPokemon('gengar', ['quickAttack'])];
+
+    const battle = new Battle(player1, player2);
+
+    const randomSpy = jest
+      .spyOn(Math, 'random')
+      .mockReturnValueOnce(0) // turn1 p1 protect success
+      .mockReturnValueOnce(0) // turn1 p2 accuracy check
+      .mockReturnValueOnce(0.4) // turn2 p1 protect fails (1/3)
+      .mockReturnValueOnce(0); // turn2 p2 accuracy check
+
+    battle.executeTurn(
+      { type: 'move', moveId: 'protect' },
+      { type: 'move', moveId: 'quickAttack' }
+    );
+
+    battle.executeTurn(
+      { type: 'move', moveId: 'protect' },
+      { type: 'move', moveId: 'quickAttack' }
+    );
+
+    randomSpy.mockRestore();
+
+    expect(battle.log).toContain("Pikachu's Protect failed!");
+    expect(battle.log).toContain('Pikachu is protecting itself!');
+  });
+
   test('fainted Pokemon does not execute its selected move later in the turn', () => {
     const player1 = [createPokemon('pikachu', ['quickAttack'])];
     const player2 = [createPokemon('gengar', ['shadowBall'])];

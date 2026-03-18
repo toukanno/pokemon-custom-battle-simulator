@@ -8,11 +8,13 @@ class Battle {
       team: player1Team,
       active: player1Team[0],
       hazards: {},
+      protectStreak: 0,
     };
     this.player2 = {
       team: player2Team,
       active: player2Team[0],
       hazards: {},
+      protectStreak: 0,
     };
     this.turn = 0;
     this.log = [];
@@ -122,6 +124,19 @@ class Battle {
 
     this.addLog(`${attacker.name} used ${move.name}!`);
 
+    const isProtectMove = move.effects.some(effect => effect.type === 'protect');
+    if (isProtectMove) {
+      const protectSuccessChance = player.protectStreak === 0 ? 1 : Math.pow(1 / 3, player.protectStreak);
+      if (Math.random() > protectSuccessChance) {
+        player.protectStreak = 0;
+        this.addLog(`${attacker.name}'s Protect failed!`);
+        return;
+      }
+      player.protectStreak++;
+    } else {
+      player.protectStreak = 0;
+    }
+
     // Accuracy check
     if (move.accuracy !== null) {
       const accuracyMultiplier = attacker.getEffectiveStat('accuracy');
@@ -215,6 +230,7 @@ class Battle {
     previous.toxicCounter = 0;
 
     player.active = pokemon;
+    player.protectStreak = 0;
     this.addLog(`${previous.name} was withdrawn! Go, ${pokemon.name}!`);
 
     // Apply entry hazards
