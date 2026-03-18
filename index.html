@@ -56,6 +56,11 @@ h1{font-size:14px;margin:10px 0;color:#ffd700;text-align:center;text-shadow:2px 
 .setup-screen h2{font-size:11px;color:#ffd700;margin-bottom:12px}
 .setup-screen label{display:block;margin:6px 0 3px;color:#aaa}
 .setup-screen select,.setup-screen input{font-family:'Press Start 2P',monospace;font-size:8px;padding:6px;background:#111;color:#fff;border:2px solid #555;border-radius:4px;width:100%}
+.selection-summary{margin:8px 0 10px;padding:8px;background:#111;border:2px solid #333;border-radius:6px;line-height:1.8}
+.selection-summary strong{color:#ffd700}
+.helper-text{font-size:7px;color:#8bd3ff;margin-top:4px;line-height:1.8}
+.move-hint{grid-column:span 2;background:#111;border:2px solid #333;border-radius:6px;padding:8px;font-size:7px;line-height:1.8;color:#ddd;margin-bottom:6px}
+.move-hint strong{color:#ffd700}
 .team-setup{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
 .pokemon-card{background:#1a1a3a;border:2px solid #444;border-radius:8px;padding:8px}
 .pokemon-card h3{font-size:8px;color:#ffd700;margin-bottom:6px}
@@ -263,6 +268,7 @@ function aiChooseSwitch(aiPlayer){
 
 // ============= UI =============
 let battle=null,state='setup',playerTeamIds=[],aiTeamIds=[];
+const TEAM_SIZE = 3;
 const app=document.getElementById('app');
 
 function buildPokemon(id){
@@ -280,13 +286,14 @@ function renderSetup(){
   const ids=Object.keys(POKEDEX);
   let html=`<div class="setup-screen">
     <h2>TEAM SELECT</h2>
+    <div class="selection-summary"><strong>ルール:</strong> きみ / あいて ともに ${TEAM_SIZE}体を選んで、交代しながらターン制バトルを行います。<div class="helper-text">タイプ相性・状態異常・交代・ログ表示に対応しています。</div></div>
     <div class="team-setup">
       <div>
-        <label>きみの チーム (3体えらぶ)</label>
+        <label>きみの チーム (${TEAM_SIZE}体えらぶ)</label>
         ${ids.map(id=>{const p=POKEDEX[id];return`<div style="margin:4px 0"><label><input type="checkbox" class="p1check" value="${id}"> ${p.sprite} ${p.name} <span class="type-badge ${p.types[0]}" style="background:var(--c)">${TYPE_JP[p.types[0]]}</span>${p.types[1]?`<span class="type-badge ${p.types[1]}">${TYPE_JP[p.types[1]]}</span>`:''}</label></div>`}).join('')}
       </div>
       <div>
-        <label>あいての チーム (3体えらぶ)</label>
+        <label>あいての チーム (${TEAM_SIZE}体えらぶ)</label>
         ${ids.map(id=>{const p=POKEDEX[id];return`<div style="margin:4px 0"><label><input type="checkbox" class="p2check" value="${id}"> ${p.sprite} ${p.name} <span class="type-badge ${p.types[0]}">${TYPE_JP[p.types[0]]}</span>${p.types[1]?`<span class="type-badge ${p.types[1]}">${TYPE_JP[p.types[1]]}</span>`:''}</label></div>`}).join('')}
       </div>
     </div>
@@ -296,26 +303,48 @@ function renderSetup(){
   app.innerHTML=html;
 }
 
+function syncSelectionLimit(selector){
+  const checked=[...document.querySelectorAll(`${selector}:checked`)];
+  const unchecked=[...document.querySelectorAll(selector)].filter(box=>!box.checked);
+  const locked=checked.length>=TEAM_SIZE;
+  unchecked.forEach(box=>box.disabled=locked);
+}
+
 window.autoSelect=function(){
   const ids=Object.keys(POKEDEX);
   const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
   const s1=shuffle([...ids]).slice(0,3),s2=shuffle([...ids]).slice(0,3);
   document.querySelectorAll('.p1check').forEach(c=>c.checked=s1.includes(c.value));
   document.querySelectorAll('.p2check').forEach(c=>c.checked=s2.includes(c.value));
+  syncSelectionLimit('.p1check');
+  syncSelectionLimit('.p2check');
 };
+
+document.addEventListener('change',event=>{
+  if(event.target.classList.contains('p1check'))syncSelectionLimit('.p1check');
+  if(event.target.classList.contains('p2check'))syncSelectionLimit('.p2check');
+});
 
 window.startBattle=function(){
   playerTeamIds=[...document.querySelectorAll('.p1check:checked')].map(c=>c.value);
   aiTeamIds=[...document.querySelectorAll('.p2check:checked')].map(c=>c.value);
-  if(playerTeamIds.length<1||playerTeamIds.length>6){alert('チームを 1〜6体 えらんでください');return}
-  if(aiTeamIds.length<1||aiTeamIds.length>6){alert('あいてチームを 1〜6体 えらんでください');return}
+  if(playerTeamIds.length!==TEAM_SIZE){alert(`きみのチームを ${TEAM_SIZE}体 えらんでください`);return}
+  if(aiTeamIds.length!==TEAM_SIZE){alert(`あいてチームを ${TEAM_SIZE}体 えらんでください`);return}
   const p1=playerTeamIds.map(buildPokemon),p2=aiTeamIds.map(buildPokemon);
   battle=new BattleEngine(p1,p2);
   state='battle';render();
 };
 
-function hpColor(pct){return pct>50?'':'yellow'||(pct>20?'yellow':'red')}
 function getHpClass(pct){if(pct>50)return'';if(pct>20)return'yellow';return'red'}
+
+function describeMoveMatchup(moveId, attacker, defender){
+  const move=getMoveById(moveId);
+  if(!move||move.category===MOVE_CATEGORIES.STATUS)return '変化技';
+  const stab=attacker.types.includes(move.type)?'STAB':'非STAB';
+  const effectiveness=getEffectiveness(move.type,defender.types);
+  const labels={0:'無効',0.25:'1/4',0.5:'半減',1:'等倍',2:'効果抜群',4:'4倍'};
+  return `${TYPE_JP[move.type]} / ${stab} / 相性 ${labels[effectiveness]||effectiveness+'x'}`;
+}
 
 function renderBattle(){
   const p1=battle.p1,p2=battle.p2;
@@ -348,8 +377,8 @@ function renderBattle(){
     html+=`</div>`;
   }else{
     html+=`<div class="tab-bar"><div class="tab active" id="tab-fight" onclick="showTab('fight')">たたかう</div><div class="tab" id="tab-pokemon" onclick="showTab('pokemon')">ポケモン</div></div>`;
-    html+=`<div id="fight-panel" class="actions">`;
-    p1.active.moves.forEach(mid=>{const m=getMoveById(mid);if(m)html+=`<button class="btn ${m.type}" onclick="doMove('${mid}')">${m.name}<br><span style="font-size:6px">${TYPE_JP[m.type]} ${m.category==='status'?'変化':'威力:'+m.power}</span></button>`});
+    html+=`<div id="fight-panel" class="actions"><div class="move-hint"><strong>相手:</strong> ${p2.active.name} / <strong>推奨:</strong> タイプ相性の良い技を選択</div>`;
+    p1.active.moves.forEach(mid=>{const m=getMoveById(mid);if(m)html+=`<button class="btn ${m.type}" onclick="doMove('${mid}')">${m.name}<br><span style="font-size:6px">${describeMoveMatchup(mid,p1.active,p2.active)}${m.category==='status'?'':' / 威力:'+m.power}</span></button>`});
     html+=`</div>`;
     html+=`<div id="pokemon-panel" class="switch-panel" style="display:none">`;
     battle.p1.team.forEach((p,i)=>{if(p!==battle.p1.active)html+=`<button class="btn switch-btn" ${!p.isAlive?'disabled':''} onclick="doSwitch(${i})">${p.name}<br><span style="font-size:6px">HP:${p.currentHp}/${p.stats.hp}</span></button>`});
