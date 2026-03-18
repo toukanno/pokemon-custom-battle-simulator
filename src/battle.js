@@ -47,7 +47,10 @@ class Battle {
       if (this.isOver) break;
       this.executeAction(action.player, action.action);
       this.checkFainted();
+      this.checkWinCondition();
     }
+
+    if (this.isOver) return;
 
     this.applyEndOfTurnEffects();
     this.checkWinCondition();
