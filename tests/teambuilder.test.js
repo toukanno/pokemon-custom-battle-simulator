@@ -112,13 +112,24 @@ describe('Generation features in teambuilder', () => {
       expect(gen4).not.toContain('charizard');
     });
 
+    test('returns Gen 2 and Gen 3 Pokemon', () => {
+      const gen2 = listPokemonByGeneration(2);
+      expect(gen2).toContain('tyranitar');
+      expect(gen2).not.toContain('metagross');
+
+      const gen3 = listPokemonByGeneration(3);
+      expect(gen3).toContain('metagross');
+      expect(gen3).toContain('gardevoir');
+      expect(gen3).not.toContain('charizard');
+    });
+
     test('returns empty array for invalid generation', () => {
       expect(listPokemonByGeneration(0)).toEqual([]);
       expect(listPokemonByGeneration(10)).toEqual([]);
     });
 
     test('returns empty array for generation with no Pokemon in Pokedex', () => {
-      expect(listPokemonByGeneration(2)).toEqual([]);
+      expect(listPokemonByGeneration(5)).toEqual([]);
     });
   });
 
@@ -127,6 +138,7 @@ describe('Generation features in teambuilder', () => {
       const gen1Dex = filterPokedexByGeneration(1);
       expect(Object.keys(gen1Dex)).toContain('charizard');
       expect(Object.keys(gen1Dex)).not.toContain('garchomp');
+      expect(Object.keys(gen1Dex)).not.toContain('tyranitar');
       expect(gen1Dex.charizard.name).toBe('Charizard');
     });
 

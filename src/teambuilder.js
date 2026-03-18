@@ -64,6 +64,24 @@ const POKEDEX = {
     baseStats: { hp: 85, attack: 50, defense: 95, specialAttack: 120, specialDefense: 115, speed: 80 },
     generation: 4,
   },
+  tyranitar: {
+    name: 'Tyranitar',
+    types: [TYPES.ROCK, TYPES.DARK],
+    baseStats: { hp: 100, attack: 134, defense: 110, specialAttack: 95, specialDefense: 100, speed: 61 },
+    generation: 2,
+  },
+  metagross: {
+    name: 'Metagross',
+    types: [TYPES.STEEL, TYPES.PSYCHIC],
+    baseStats: { hp: 80, attack: 135, defense: 130, specialAttack: 95, specialDefense: 90, speed: 70 },
+    generation: 3,
+  },
+  gardevoir: {
+    name: 'Gardevoir',
+    types: [TYPES.PSYCHIC, TYPES.FAIRY],
+    baseStats: { hp: 68, attack: 65, defense: 65, specialAttack: 125, specialDefense: 115, speed: 80 },
+    generation: 3,
+  },
 };
 
 function buildPokemon(speciesId, config = {}) {
