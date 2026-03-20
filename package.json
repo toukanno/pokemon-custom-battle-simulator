@@ -5,7 +5,9 @@
   "main": "src/index.js",
   "scripts": {
     "test": "jest",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "start": "node server.js",
+    "start:dev": "PORT=3000 node server.js"
   },
   "repository": {
     "type": "git",
