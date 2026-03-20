@@ -123,7 +123,7 @@ describe('Generation features in teambuilder', () => {
     });
 
     test('returns empty array for generation with no Pokemon in Pokedex', () => {
-      expect(listPokemonByGeneration(2)).toEqual([]);
+      expect(listPokemonByGeneration(8)).toEqual([]);
     });
   });
 
