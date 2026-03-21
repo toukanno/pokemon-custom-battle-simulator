@@ -20,6 +20,13 @@ describe('Pokemon', () => {
       expect(pokemon.types).toEqual([TYPES.FIRE, TYPES.FLYING]);
     });
 
+    test('stores icon metadata when provided', () => {
+      const pokemon = createTestPokemon({
+        icon: { source: 'pkhex', path: 'pkhex://6/charizard', alt: 'Charizard icon' },
+      });
+      expect(pokemon.icon).toEqual({ source: 'pkhex', path: 'pkhex://6/charizard', alt: 'Charizard icon' });
+    });
+
     test('initializes with full HP', () => {
       const pokemon = createTestPokemon();
       expect(pokemon.currentHp).toBe(pokemon.stats.hp);
@@ -35,8 +42,6 @@ describe('Pokemon', () => {
   describe('stat calculation', () => {
     test('calculates HP stat correctly', () => {
       const pokemon = createTestPokemon();
-      // HP formula: ((2*base + IV + EV/4) * level / 100) + level + 10
-      // ((2*78 + 31 + 0) * 50 / 100) + 50 + 10 = 153
       expect(pokemon.stats.hp).toBe(153);
     });
 
@@ -108,7 +113,6 @@ describe('Pokemon', () => {
     });
 
     test('cannot apply status if one already exists', () => {
-      // Use a non-fire type so burn actually applies
       const pokemon = createTestPokemon({ types: ['normal'] });
       pokemon.setStatus('burn');
       expect(pokemon.setStatus('paralysis')).toBe(false);

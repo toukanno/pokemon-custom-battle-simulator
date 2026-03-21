@@ -3,7 +3,7 @@ const { Battle } = require('./battle');
 const { MOVES, MOVE_CATEGORIES, getMoveById, validateMoveset } = require('./moves');
 const { TYPES, TYPE_EFFECTIVENESS, getEffectiveness, getEffectivenessMessage } = require('./types');
 const { calculateDamage, getCriticalHitChance, calculateRecoilDamage, calculateConfusionDamage } = require('./damage');
-const { POKEDEX, buildPokemon, buildTeam, validateTeam, getPokedexEntry, listAvailablePokemon } = require('./teambuilder');
+const { ALLOWED_ICON_SOURCES, POKEDEX, buildPokemon, buildTeam, validateTeam, getPokedexEntry, listAvailablePokemon, normalizeIcon } = require('./teambuilder');
 
 module.exports = {
   Pokemon,
@@ -20,10 +20,12 @@ module.exports = {
   getCriticalHitChance,
   calculateRecoilDamage,
   calculateConfusionDamage,
+  ALLOWED_ICON_SOURCES,
   POKEDEX,
   buildPokemon,
   buildTeam,
   validateTeam,
   getPokedexEntry,
   listAvailablePokemon,
+  normalizeIcon,
 };
