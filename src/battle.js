@@ -186,15 +186,16 @@ class Battle {
         case 'stat':
           this.addLog(target.modifyStat(effect.stat, effect.stages));
           break;
-        case 'heal':
+        case 'heal': {
           const healed = attacker.heal(Math.floor(attacker.stats.hp * effect.amount));
           if (healed > 0) this.addLog(`${attacker.name} restored ${healed} HP!`);
           break;
+        }
         case 'protect':
           attacker.volatileStatus.add('protect');
           this.addLog(`${attacker.name} is protecting itself!`);
           break;
-        case 'hazard':
+        case 'hazard': {
           const targetSide = effect.target === 'opponent' ? opponent : player;
           if (!targetSide.hazards[effect.hazard]) {
             targetSide.hazards[effect.hazard] = 1;
@@ -204,6 +205,7 @@ class Battle {
             this.addLog(`${effect.hazard} was added to the opponent's side!`);
           }
           break;
+        }
       }
     }
   }

@@ -1,6 +1,9 @@
 const { getEffectiveness } = require('./types');
-const { getMoveById, MOVES, MOVE_CATEGORIES } = require('./moves');
+const { getMoveById, MOVE_CATEGORIES } = require('./moves');
 const { calculateDamage } = require('./damage');
+
+const ALL_TYPES = ['normal', 'fire', 'water', 'electric', 'grass', 'ice', 'fighting',
+  'poison', 'ground', 'flying', 'psychic', 'bug', 'rock', 'ghost', 'dragon', 'dark', 'steel', 'fairy'];
 
 class MatchupScout {
   constructor() {}
@@ -23,8 +26,7 @@ class MatchupScout {
   }
 
   getTypeWeaknesses(types) {
-    const allTypes = ['normal', 'fire', 'water', 'electric', 'grass', 'ice', 'fighting',
-      'poison', 'ground', 'flying', 'psychic', 'bug', 'rock', 'ghost', 'dragon', 'dark', 'steel', 'fairy'];
+    const allTypes = ALL_TYPES;
 
     const weaknesses = [];
     const resistances = [];
@@ -123,8 +125,7 @@ class MatchupScout {
     }
 
     // Team weaknesses
-    const allTypes = ['normal', 'fire', 'water', 'electric', 'grass', 'ice', 'fighting',
-      'poison', 'ground', 'flying', 'psychic', 'bug', 'rock', 'ghost', 'dragon', 'dark', 'steel', 'fairy'];
+    const allTypes = ALL_TYPES;
 
     const teamWeaknesses = {};
     for (const type of allTypes) {

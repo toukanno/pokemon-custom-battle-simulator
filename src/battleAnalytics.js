@@ -1,5 +1,4 @@
-const { getMoveById, MOVE_CATEGORIES } = require('./moves');
-const { getEffectiveness } = require('./types');
+const { getMoveById, MOVES } = require('./moves');
 
 class BattleAnalytics {
   constructor(battle) {
@@ -227,7 +226,7 @@ class BattleAnalytics {
   _getMoveId(move) {
     if (typeof move === 'string') return move;
     if (move && move.name) {
-      const id = Object.entries(require('./moves').MOVES).find(([, m]) => m.name === move.name);
+      const id = Object.entries(MOVES).find(([, m]) => m.name === move.name);
       return id ? id[0] : move.name;
     }
     return 'unknown';

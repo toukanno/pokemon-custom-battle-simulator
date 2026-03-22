@@ -1,5 +1,33 @@
 const { TYPES } = require('./types');
 
+const NATURES = {
+  hardy: {},
+  lonely: { attack: 1.1, defense: 0.9 },
+  brave: { attack: 1.1, speed: 0.9 },
+  adamant: { attack: 1.1, specialAttack: 0.9 },
+  naughty: { attack: 1.1, specialDefense: 0.9 },
+  bold: { defense: 1.1, attack: 0.9 },
+  relaxed: { defense: 1.1, speed: 0.9 },
+  impish: { defense: 1.1, specialAttack: 0.9 },
+  lax: { defense: 1.1, specialDefense: 0.9 },
+  timid: { speed: 1.1, attack: 0.9 },
+  hasty: { speed: 1.1, defense: 0.9 },
+  jolly: { speed: 1.1, specialAttack: 0.9 },
+  naive: { speed: 1.1, specialDefense: 0.9 },
+  modest: { specialAttack: 1.1, attack: 0.9 },
+  mild: { specialAttack: 1.1, defense: 0.9 },
+  quiet: { specialAttack: 1.1, speed: 0.9 },
+  rash: { specialAttack: 1.1, specialDefense: 0.9 },
+  calm: { specialDefense: 1.1, attack: 0.9 },
+  gentle: { specialDefense: 1.1, defense: 0.9 },
+  sassy: { specialDefense: 1.1, speed: 0.9 },
+  careful: { specialDefense: 1.1, specialAttack: 0.9 },
+  bashful: {},
+  quirky: {},
+  serious: {},
+  docile: {},
+};
+
 class Pokemon {
   constructor({ name, types, baseStats, level = 50, moves = [], nature = 'hardy', evs = {}, ivs = {}, generation = null }) {
     this.name = name;
@@ -64,34 +92,7 @@ class Pokemon {
   }
 
   getNatureModifiers() {
-    const natures = {
-      hardy: {},
-      lonely: { attack: 1.1, defense: 0.9 },
-      brave: { attack: 1.1, speed: 0.9 },
-      adamant: { attack: 1.1, specialAttack: 0.9 },
-      naughty: { attack: 1.1, specialDefense: 0.9 },
-      bold: { defense: 1.1, attack: 0.9 },
-      relaxed: { defense: 1.1, speed: 0.9 },
-      impish: { defense: 1.1, specialAttack: 0.9 },
-      lax: { defense: 1.1, specialDefense: 0.9 },
-      timid: { speed: 1.1, attack: 0.9 },
-      hasty: { speed: 1.1, defense: 0.9 },
-      jolly: { speed: 1.1, specialAttack: 0.9 },
-      naive: { speed: 1.1, specialDefense: 0.9 },
-      modest: { specialAttack: 1.1, attack: 0.9 },
-      mild: { specialAttack: 1.1, defense: 0.9 },
-      quiet: { specialAttack: 1.1, speed: 0.9 },
-      rash: { specialAttack: 1.1, specialDefense: 0.9 },
-      calm: { specialDefense: 1.1, attack: 0.9 },
-      gentle: { specialDefense: 1.1, defense: 0.9 },
-      sassy: { specialDefense: 1.1, speed: 0.9 },
-      careful: { specialDefense: 1.1, specialAttack: 0.9 },
-      bashful: {},
-      quirky: {},
-      serious: {},
-      docile: {},
-    };
-    return natures[this.nature] || {};
+    return NATURES[this.nature] || {};
   }
 
   getEffectiveStat(stat) {
